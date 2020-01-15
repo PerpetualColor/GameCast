@@ -4,6 +4,11 @@ Live sports game broadcasting
 So here's our git repository for the project. Here's a few things you might want:
 
 ## How to get up and running
+### Download the repository
+1. Install `git` if you don't have it already. You can get it from https://git-scm.com/downloads
+2. In a terminal, navigate to the directory where you want to store your code.
+3. Run the command `git clone git://github.com/PerpetualColor/GameCast.git` to download the code.
+
 ### backend
 1. Make sure [java](https://www.oracle.com/technetwork/java/javase/downloads/index.html) is installed.
 2. Install [maven](https://maven.apache.org/download.cgi)
@@ -14,6 +19,7 @@ So here's our git repository for the project. Here's a few things you might want
         * OSX: https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path
         * Windows: https://docs.alfresco.com/4.2/tasks/fot-addpath.html 
         * Linux: you know what to do.
+        
 ### frontend
 1. Install [npm](https://www.npmjs.com/get-npm) using the installer. You don't need the extra tools they recommend.
 2. Install `@angular/cli` globally - just run the command (after installing npm) `npm install -g @angular/cli`. If this fails, run it again a few times. If it continues to fail, look up your error message.
