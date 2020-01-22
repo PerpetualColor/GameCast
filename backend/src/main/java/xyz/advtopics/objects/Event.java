@@ -50,11 +50,12 @@ public class Event {
         this.data = data;
     }
 
+
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getDateTime() {
         return dateTime;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
     public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
