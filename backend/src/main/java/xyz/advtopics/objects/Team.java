@@ -1,4 +1,6 @@
 package xyz.advtopics.objects;
+//Author: Robert Walker
+
 import java.util.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
