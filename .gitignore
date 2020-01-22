@@ -1,4 +1,4 @@
 .vscode
 hibernate.cfg.xml
-backend/target/
+backend/target
 node_modules
