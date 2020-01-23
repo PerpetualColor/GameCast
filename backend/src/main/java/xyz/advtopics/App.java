@@ -18,7 +18,7 @@ public class App
 
     @Bean
     public SessionFactory sessionFactory() {
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure().build();
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure().configure("mappings.cfg.xml").build();
         SessionFactory sessionFactory = new MetadataSources(serviceRegistry).buildMetadata().buildSessionFactory();
         return sessionFactory;
     }

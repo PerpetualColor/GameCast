@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <mapping class="xyz.advtopics.objects.Event" />
+        <mapping class="xyz.advtopics.objects.Game" />
+        <mapping class="xyz.advtopics.objects.Player" />
+        <mapping class="xyz.advtopics.objects.Team" />
+        
+    </session-factory>
+</hibernate-configuration>

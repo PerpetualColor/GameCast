@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import xyz.advtopics.objects.Event;
+import xyz.advtopics.objects.Team;
 
 @Service
 public class EventService {
@@ -19,6 +20,15 @@ public class EventService {
         e.setData(data);
         session.beginTransaction();
         session.persist(e);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void addTeam(String data) {
+        Session session = sessionFactory.openSession();
+        Team team = new Team();
+        session.beginTransaction();
+        session.persist(team);
         session.getTransaction().commit();
         session.close();
     }

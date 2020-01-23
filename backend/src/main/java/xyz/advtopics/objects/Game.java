@@ -18,8 +18,8 @@ public class Game {
     
     private long id;
     private Date dateTime;
-    private ArrayList<Team> teams;
-    private ArrayList<Event> events;
+    // private List<Team> teams;
+    // private List<Event> events;
 
     public Game() {
     }
@@ -44,21 +44,21 @@ public class Game {
     /**
      * @return what happened
      */
-    public List<Team> getTeams() {
-        return teams;
-    }
+    // public List<Team> getTeams() {
+    //     return teams;
+    // }
 
-    public void addTeams(Team team) {
-        teams.add(team);
-    }
+    // public void addTeams(Team team) {
+    //     teams.add(team);
+    // }
 
-    public void addEvents(Event event) {
-        events.add(event);
-    }
+    // public void addEvents(Event event) {
+    //     events.add(event);
+    // }
 
-    public List<Event> getEvents() {
-        return events;
-    }
+    // public List<Event> getEvents() {
+    //     return events;
+    // }
 
 
     public Date getDateTime() {

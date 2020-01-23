@@ -2,16 +2,21 @@ package xyz.advtopics.objects;
 //Author: Robert Walker
 
 import java.util.*;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
 
+@Entity
+@Table(name = "Teams")
 public class Team {
     private long id;
-    private String teamName;
-    private ArrayList<Player> players;
+    private List<Player> players;
+    private String name;
 
     public Team() {
     }
@@ -29,10 +34,21 @@ public class Team {
         this.id = id;
     }
 
-    public void addPlayer(Player player){
-        players.add(player);
+    @OneToMany(mappedBy = "team")
+    public List<Player> getPlayers() {
+        return players;
     }
-    public void removePlayer(Player player) {
-        players.remove(player);
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }
