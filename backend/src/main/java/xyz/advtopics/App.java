@@ -16,6 +16,10 @@ public class App
         SpringApplication.run(App.class, args);
     }
 
+    /**
+     * 
+     * @return A Hibernate session factory. Use it to open sessions for interacting with the database.
+     */
     @Bean
     public SessionFactory sessionFactory() {
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure().configure("mappings.cfg.xml").build();

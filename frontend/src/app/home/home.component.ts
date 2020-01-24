@@ -14,8 +14,8 @@ export class HomeComponent implements OnInit {
   }
 
   getHelloMessage() {
-    this.backendService.getHelloWorld().subscribe(result => {
-      console.log(result.body);
+    this.backendService.getAllTeams().subscribe(result => {
+      console.dir(result.body);
     });
   }
 

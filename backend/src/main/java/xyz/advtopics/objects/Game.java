@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,8 +21,8 @@ public class Game {
     
     private long id;
     private Date dateTime;
-    // private List<Team> teams;
-    // private List<Event> events;
+    private List<Team> teams;
+    private List<Event> events;
 
     public Game() {
     }
@@ -42,32 +45,44 @@ public class Game {
     }
 
     /**
-     * @return what happened
+     * @return teams playing in the game
      */
-    // public List<Team> getTeams() {
-    //     return teams;
-    // }
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "game_teams")
+    public List<Team> getTeams() {
+        return teams;
+    }
 
-    // public void addTeams(Team team) {
-    //     teams.add(team);
-    // }
+    public void addTeam(Team team) {
+        teams.add(team);
+    }
 
-    // public void addEvents(Event event) {
-    //     events.add(event);
-    // }
+    public void addEvents(Event event) {
+        events.add(event);
+    }
 
-    // public List<Event> getEvents() {
-    //     return events;
-    // }
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "game_events")
+    public List<Event> getEvents() {
+        return events;
+    }
 
 
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getDateTime() {
         return dateTime;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
     public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
 }
