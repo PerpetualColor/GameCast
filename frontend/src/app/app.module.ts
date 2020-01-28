@@ -9,13 +9,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material';
 import { HomeComponent } from './home/home.component';
+import { RosterComponent } from './roster/roster.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameDisplayComponent,
     TitlebarComponent,
-    HomeComponent
+    HomeComponent,
+    RosterComponent
   ],
   imports: [
     BrowserModule,
