@@ -1,12 +1,13 @@
 .titlebar {
     display: grid;
     grid-template-rows: 100%;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.75);
+    border-bottom: 8px solid rgba(0, 100, 20, 0.75);
 }
 
 .homeLink {
     margin-left: 0.6%;
     font-size: 1.5em;
+    font-family: cursive;
 }
 
 .homeLink p {

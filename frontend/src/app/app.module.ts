@@ -11,6 +11,7 @@ import { MatCardModule} from '@angular/material';
 import { MatButtonModule } from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { GameScoreBoardComponent } from './game-score-board/game-score-board.component';
+import { RosterComponent } from './roster/roster.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { GameScoreBoardComponent } from './game-score-board/game-score-board.com
     GameDisplayComponent,
     TitlebarComponent,
     HomeComponent,
-    GameScoreBoardComponent
+    GameScoreBoardComponent,
+    RosterComponent
   ],
   imports: [
     BrowserModule,
