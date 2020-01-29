@@ -35,7 +35,7 @@ public class Team {
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
     public List<Player> getPlayers() {
         return players;
     }
