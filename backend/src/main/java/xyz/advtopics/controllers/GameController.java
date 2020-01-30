@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import xyz.advtopics.objects.Event;
 import xyz.advtopics.objects.Team;
-import xyz.advtopics.objects.DTOs.GameDTO;
 import xyz.advtopics.services.GameService;
 
 import java.util.List;
@@ -73,17 +71,17 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(events); 
     }
 
-    @PostMapping("/setEvents")
+    // @PostMapping("/setEvents")
 
-    // Es tan roto: Necesito una manera de encontrar los eventos que transmite el frontend
-    public ResponseEntity<String> addEventToGame(long gameID,  long groupID){
-        Session session = sessionFactory.openSession();
+    // // Es tan roto: Necesito una manera de encontrar los eventos que transmite el frontend
+    // public ResponseEntity<String> addEventToGame(long gameID, long groupID){
+    //     Session session = sessionFactory.openSession();
         
-        gameService.addEvents(gameID, );
+    //     gameService.addEvents(gameID, groupID);
 
-        session.close();
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Created"); 
-    }
+    //     session.close();
+    //     return ResponseEntity.status(HttpStatus.ACCEPTED).body("Created"); 
+    // }
 
 
 
