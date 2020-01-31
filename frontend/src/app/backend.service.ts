@@ -32,10 +32,18 @@ export class BackendService {
     );
   }
 
+  getEvent(): Observable<HttpResponse<Event>>{
+    return this.http.get<Event>(`${baseUrl}/getEvent`,{
+      withCredentials: false,
+      observe: 'response',
+    }).pipe(
+        catchError(error => this.handleError(error))
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     console.error("Error: ", error.error.message);
     return throwError(error);
   }
-
   
 }
