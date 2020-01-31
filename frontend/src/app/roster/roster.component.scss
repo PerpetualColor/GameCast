@@ -1,18 +1,18 @@
 .column{
    float: left;
    width: 10%;
-   padding: 0 8px;
+   height: 20%;
+   padding: 0 8px
+}
+
+.h1{
+    font-style:arial;
 }
 
 .container{
-    padding: 16px;
+    padding: 10px;
 }
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: rgb(227, 255, 221);
 }
-
-.container::after, .row::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
