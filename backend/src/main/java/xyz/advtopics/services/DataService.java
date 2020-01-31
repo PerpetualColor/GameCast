@@ -67,4 +67,7 @@ public class DataService {
         return teams;
     }
 
+    public void addEvent(Event event) {
+        
+    }
 }

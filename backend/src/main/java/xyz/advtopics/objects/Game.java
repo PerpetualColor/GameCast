@@ -53,7 +53,7 @@ public class Game {
         return teams;
     }
 
-    public void addTeam(Team team) {
+    public void addTeamToGame(Team team) {
         teams.add(team);
     }
 

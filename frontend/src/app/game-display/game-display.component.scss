@@ -1,0 +1,31 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    gap: 20px;
+}
+
+.grid-roster {
+    grid-column: 1;
+}
+
+.grid-center {
+    display: grid;
+    grid-template-rows: 50% 50%;
+    grid-column: 2;
+    gap: 0px;
+}
+
+.grid-display {
+    grid-row: 1;   
+    background-color: blue;
+}
+
+.grid-gamecast {
+    grid-row: 2;
+    background-color: red;
+}
+
+.grid-chat {
+    grid-column: 3;
+    background-color: green;
+}
