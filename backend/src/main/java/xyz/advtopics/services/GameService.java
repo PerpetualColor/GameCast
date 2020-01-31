@@ -94,4 +94,6 @@ public class GameService {
         session.getTransaction().commit();
         session.close();
     }
+
+    
 }
