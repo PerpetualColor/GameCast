@@ -26,7 +26,6 @@ public class EventService{
     // returns the event 
     public Event getEvent(long eventId){
         Session session = sessionFactory.openSession();
-        System.out.println("Getting event");
         Event e = session.get(Event.class, eventId);
         session.close();
         return e;

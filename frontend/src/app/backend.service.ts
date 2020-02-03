@@ -32,10 +32,13 @@ export class BackendService {
     );
   }
 
-  getEvent(): Observable<HttpResponse<Event>>{
+  getEvent(eventId: number): Observable<HttpResponse<Event>>{
     return this.http.get<Event>(`${baseUrl}/getEvent`,{
       withCredentials: false,
       observe: 'response',
+      params: {
+        eventId: eventId.toString()
+      }
     }).pipe(
         catchError(error => this.handleError(error))
     );
