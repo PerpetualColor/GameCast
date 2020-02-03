@@ -32,6 +32,25 @@ export class BackendService {
     );
   }
 
+  getTeam(): Observable<HttpResponse<Team>> {
+    return this.http.get<Team>(`${baseUrl}/getTeam`, {
+      withCredentials: false,
+      observe: 'response'
+    }).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  createTeam(): Observable<HttpResponse<string>> {
+    return this.http.post(`${baseUrl}/createTeam`, { name: "Dave", players: []}, {
+      withCredentials: false,
+      observe: 'response',
+      responseType: 'text'
+    }).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     console.error("Error: ", error.error.message);
     return throwError(error);
