@@ -1,0 +1,8 @@
+<mat-card>
+    <h3 class="scoreDetector">Score: {{ score[0] }} {{ score[1] }}</h3>
+    <h3>Events: </h3>
+    <cdk-virtual-scroll-viewport itemSize="50" class="event-viewport">
+        <div *cdkVirtualFor="let e of events" class="event">{{ e.data }}</div>
+      </cdk-virtual-scroll-viewport>
+      
+</mat-card>

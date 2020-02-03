@@ -12,6 +12,8 @@ import { MatButtonModule } from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { GameScoreBoardComponent } from './game-score-board/game-score-board.component';
 import { RosterComponent } from './roster/roster.component';
+import { EventConsoleComponent } from './event-console/event-console.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { RosterComponent } from './roster/roster.component';
     TitlebarComponent,
     HomeComponent,
     GameScoreBoardComponent,
-    RosterComponent
+    RosterComponent,
+    EventConsoleComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +32,7 @@ import { RosterComponent } from './roster/roster.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    ScrollingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
