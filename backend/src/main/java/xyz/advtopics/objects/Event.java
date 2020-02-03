@@ -1,13 +1,15 @@
 package xyz.advtopics.objects;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -17,7 +19,8 @@ public class Event {
     
     private long id;
     private String data;
-    private Date dateTime;
+    private LocalDateTime dateTime;
+    private Game game;
 
     public Event() {
     }
@@ -50,14 +53,22 @@ public class Event {
         this.data = data;
     }
 
-
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    @ManyToOne(fetch =  FetchType.LAZY)
+    @JsonIgnore
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
 }

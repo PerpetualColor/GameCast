@@ -32,15 +32,22 @@ export class BackendService {
     );
   }
 
-  getEvent(eventId: number): Observable<HttpResponse<Event>>{
-    return this.http.get<Event>(`${baseUrl}/getEvent`,{
+  getTeam(): Observable<HttpResponse<Team>> {
+    return this.http.get<Team>(`${baseUrl}/getTeam`, {
+      withCredentials: false,
+      observe: 'response'
+    }).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  createTeam(): Observable<HttpResponse<string>> {
+    return this.http.post(`${baseUrl}/createTeam`, { name: "Dave", players: []}, {
       withCredentials: false,
       observe: 'response',
-      params: {
-        eventId: eventId.toString()
-      }
+      responseType: 'text'
     }).pipe(
-        catchError(error => this.handleError(error))
+      catchError(error => this.handleError(error))
     );
   }
 
