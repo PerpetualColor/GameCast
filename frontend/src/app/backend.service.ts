@@ -24,7 +24,7 @@ export class BackendService {
   }
 
   getAllTeams(): Observable<HttpResponse<Team[]>> {
-    return this.http.get<Team[]>(`${baseUrl}/getTeams`, {
+    return this.http.get<Team[]>(`${baseUrl}/getAllTeams`, {
       withCredentials: false,
       observe: 'response'
     }).pipe(
@@ -32,10 +32,13 @@ export class BackendService {
     );
   }
 
-  getTeam(): Observable<HttpResponse<Team>> {
+  getTeam(teamId: number): Observable<HttpResponse<Team>> {
     return this.http.get<Team>(`${baseUrl}/getTeam`, {
       withCredentials: false,
-      observe: 'response'
+      observe: 'response',
+      params: {
+        teamID: teamId.toString()
+      }
     }).pipe(
       catchError(error => this.handleError(error))
     );
