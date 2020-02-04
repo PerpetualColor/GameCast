@@ -1,9 +1,6 @@
 package xyz.advtopics.controllers;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +22,7 @@ public class EventController{
     // server/getPlayer
     @PostMapping("/addEvent")
     public ResponseEntity<String> addEvent(){
-        eventService.addEvent("example", LocalDateTime.ofInstant(Instant.ofEpochMilli(System.currentTimeMillis()), TimeZone.getTimeZone("UTC").toZoneId()));
+        eventService.addEvent("example", System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Successfully created event: ");
     }
 
@@ -49,7 +46,7 @@ public class EventController{
      */
     @PostMapping("/createAndAddEvent")
     public ResponseEntity<String> createAndAddEvent(@RequestParam String eventData, @RequestParam long eventDate, @RequestParam long gameId) {
-        eventService.createAndAddEvent(eventData, LocalDateTime.ofInstant(Instant.ofEpochMilli(eventDate), TimeZone.getTimeZone("UTC").toZoneId()), gameId);
+        eventService.createAndAddEvent(eventData, System.currentTimeMillis(), gameId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Success");
     }
 
