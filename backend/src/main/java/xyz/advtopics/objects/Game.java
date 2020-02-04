@@ -1,7 +1,6 @@
 package xyz.advtopics.objects;
 
 import java.util.List;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,8 +11,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -22,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Game {
     
     private long id;
-    private Date dateTime;
+    private long dateTime;
     private List<Team> teams;
     private List<Event> events;
 
@@ -68,13 +65,11 @@ public class Game {
         return events;
     }
 
-
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getDateTime() {
+    public long getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(long dateTime) {
         this.dateTime = dateTime;
     }
 

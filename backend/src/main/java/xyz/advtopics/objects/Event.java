@@ -1,7 +1,5 @@
 package xyz.advtopics.objects;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,7 +17,7 @@ public class Event {
     
     private long id;
     private String data;
-    private LocalDateTime dateTime;
+    private long dateTime;
     private Game game;
 
     public Event() {
@@ -53,11 +51,11 @@ public class Event {
         this.data = data;
     }
 
-    public LocalDateTime getDateTime() {
+    public long getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(long dateTime) {
         this.dateTime = dateTime;
     }
 

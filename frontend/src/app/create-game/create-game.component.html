@@ -1,0 +1,21 @@
+<div class="mat-elevation-z4">
+    <h3>Create a New Game</h3>
+    <mat-form-field class="gameDatepicker">
+        <input matInput [matDatepicker]="gameDatepicker" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="gameDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #gameDatepicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Time</mat-label>
+        <input matInput type="time">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="gameDatepicker">
+        <mat-select placeholder="Choose home team"></mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-select placeholder="Choose guest team"></mat-select>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary">Create</button>
+</div>
