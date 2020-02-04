@@ -3,6 +3,7 @@ package xyz.advtopics.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,9 +61,7 @@ public class GameService {
         Session session = sessionFactory.openSession();
         Game game = session.get(Game.class, gameID);
         List<Team> teams = game.getTeams();
-        session.beginTransaction();
-        session.persist(game);
-        session.getTransaction().commit();
+        Hibernate.initialize(game.getTeams());
         session.close();
         
         return teams;
@@ -72,23 +71,9 @@ public class GameService {
         Session session = sessionFactory.openSession();
         Game game = session.get(Game.class, gameID);
         List<Event> events = game.getEvents();
-        session.beginTransaction();
-        session.persist(game);
-        session.getTransaction().commit();
         session.close();
         
         return events;
-    }
-
-
-    public void setEvents(long gameID, List<Event> events) {
-        Session session = sessionFactory.openSession();
-        Game game = session.get(Game.class, gameID);
-        game.setEvents(events);
-        session.beginTransaction();
-        session.persist(game);
-        session.getTransaction().commit();
-        session.close();
     }
 
     

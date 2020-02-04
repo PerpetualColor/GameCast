@@ -71,18 +71,6 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(events); 
     }
 
-    // @PostMapping("/setEvents")
-
-    // // Es tan roto: Necesito una manera de encontrar los eventos que transmite el frontend
-    // public ResponseEntity<String> addEventToGame(long gameID, long groupID){
-    //     Session session = sessionFactory.openSession();
-        
-    //     gameService.addEvents(gameID, groupID);
-
-    //     session.close();
-    //     return ResponseEntity.status(HttpStatus.ACCEPTED).body("Created"); 
-    // }
-
 
 
 
