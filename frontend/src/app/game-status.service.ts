@@ -39,6 +39,10 @@ export class GameStatusService {
     
   }
 
+  parseEvent(event: Event) {
+    
+  }
+
   constructor() {
     this.score$ = new Observable(this.scoreSubscriber());
   }
