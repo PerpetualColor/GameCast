@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Team } from '../model-objects/team';
 import { BackendService } from '../backend.service';
+import { GameStatusService } from '../game-status.service';
 
 @Component({
   selector: 'app-roster',
@@ -11,17 +12,20 @@ export class RosterComponent implements OnInit {
   guest: Team;
   home: Team;
 
-  constructor(private backendService: BackendService) { }
+  constructor(private backendService: BackendService, private gameStatusService: GameStatusService) { }
 
   ngOnInit() {
-    this.backendService.getTeam(1).subscribe({
+    let homeID = this.gameStatusService.game.teams[0].id;
+    let guestID = this.gameStatusService.game.teams[1].id;
+    this.backendService.getTeam(homeID).subscribe({
       next: result => { this.home = result.body;
       console.dir(this.home); }
     });
-    this.backendService.getTeam(2).subscribe({
+    this.backendService.getTeam(guestID).subscribe({
       next: result => { this.guest = result.body; 
       console.dir(this.guest); }
     });
+    console.log("homeID: " + homeID + ", guestID: " + guestID);
   }
 
 }
