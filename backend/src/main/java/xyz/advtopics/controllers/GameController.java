@@ -51,13 +51,8 @@ public class GameController {
     }
 
     @PostMapping("/getTeams")
-
     public ResponseEntity<List<Team>> getTeams(long gameID, long groupID){
-        Session session = sessionFactory.openSession();
-        
         List<Team> teams = gameService.getTeams(gameID);
-
-        session.close();
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(teams); 
     }
 
