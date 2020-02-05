@@ -6,9 +6,6 @@
 
 .container{
     padding: 20px;
-}
-.card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     background-color: rgb(227, 255, 221);
 }
 
@@ -20,4 +17,9 @@ ul{
     font-size: 10;
     margin-bottom: 5px;
     background-color: rgb(255, 255, 255);
+}
+
+.teams{
+    max-width: 100%;
+    max-height: 10%;
 }
