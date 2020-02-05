@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
+import { GameStatusService } from '../game-status.service';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,10 @@ import { BackendService } from '../backend.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private backendService: BackendService) { }
+  constructor(private backendService: BackendService, private gameStatusService: GameStatusService) { }
 
   ngOnInit() {
+    this.gameStatusService.selectGame(1);
   }
 
   getHelloMessage() {

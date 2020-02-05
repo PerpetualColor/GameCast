@@ -19,14 +19,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().exceptionHandling()
             .and().csrf().disable()
-            .authorizeRequests().antMatchers("/helloworld").permitAll()
-            .and().authorizeRequests().antMatchers("/**").permitAll();
+            .authorizeRequests().antMatchers("/**").permitAll();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://www.advtopics.xyz"));
+        configuration.setAllowedOrigins(
+                Arrays.asList("http://localhost:4200"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

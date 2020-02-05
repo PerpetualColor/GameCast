@@ -48,7 +48,7 @@ public class DataService {
         Game game = new Game();
         game.setDateTime(gameInfo.dateTime);
         List<Team> teams = new ArrayList<Team>();
-        for (int i : gameInfo.teamIds) {
+        for (long i : gameInfo.teamIds) {
             teams.add(session.get(Team.class, i));
         }
         game.setTeams(teams);

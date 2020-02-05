@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Team } from '../model-objects/team';
 import { BackendService } from '../backend.service';
+import { Game } from '../model-objects/game';
+import { Time } from '@angular/common';
+import { GameDto } from '../model-objects/gameDto';
 
 @Component({
   selector: 'app-create-game',
@@ -18,6 +21,9 @@ export class CreateGameComponent implements OnInit {
   homeTeamSelect: number;
   guestTeamSelect: number;
 
+  dateSelect: Date;
+  timeSelect: Time;
+
   ngOnInit() {
     this.backendService.getAllTeams().subscribe({
       next: result => {
@@ -26,6 +32,20 @@ export class CreateGameComponent implements OnInit {
         this.guestTeams = this.teams;
       }
     });
+  }
+
+  createGame() {
+    this.dateSelect.setHours(this.timeSelect.hours);
+    this.dateSelect.setMinutes(this.timeSelect.minutes);
+
+    let game: GameDto = {
+      dateTime: this.dateSelect.getTime(),
+      teamIds: [this.homeTeamSelect, this.guestTeamSelect]
+    }
+
+    this.backendService.createGame(game).subscribe({
+      next: result => { console.log(result); }
+    })
   }
 
   filterTeams() {

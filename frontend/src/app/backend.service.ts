@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError} from 'rxjs/operators';
 import { Team } from './model-objects/team';
 import { Game } from './model-objects/game';
+import { GameDto } from './model-objects/gameDto';
 
 const baseUrl = 'http://localhost:8080';
 
@@ -67,6 +68,16 @@ export class BackendService {
       params: {
         gameID: gameID.toString()
       }
+    }).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  createGame(game: GameDto): Observable<HttpResponse<string>> {
+    return this.http.post(`${baseUrl}/createGame`, game, {
+      withCredentials: false,
+      observe: 'response',
+      responseType: 'text'
     }).pipe(
       catchError(error => this.handleError(error))
     );

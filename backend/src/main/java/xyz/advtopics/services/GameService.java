@@ -23,7 +23,7 @@ public class GameService {
     public void createGame(GameDTO gameto) {
         Session session = sessionFactory.openSession();
         Game game = new Game();
-        List<Team> teams = new ArrayList<Team>();
+        game.setTeams(new ArrayList<Team>());
 
         //Set the teams 
         for(int i = 0; i < gameto.teamIds.length;i++){
@@ -70,10 +70,7 @@ public class GameService {
         Game game = session.get(Game.class, gameID);
         Hibernate.initialize(game.getTeams());
         List<Team> teams = game.getTeams();
-<<<<<<< HEAD
         Hibernate.initialize(game.getTeams());
-=======
->>>>>>> 463900bf2be9d0e8e5ec599b6596fbef2af11f64
         session.close();
         
         return teams;
@@ -88,9 +85,6 @@ public class GameService {
         return events;
     }
 
-<<<<<<< HEAD
-    
-=======
     public void setEvents(long gameID, List<Event> events) {
         Session session = sessionFactory.openSession();
         Game game = session.get(Game.class, gameID);
@@ -100,5 +94,12 @@ public class GameService {
         session.getTransaction().commit();
         session.close();
     }
->>>>>>> 463900bf2be9d0e8e5ec599b6596fbef2af11f64
+
+    public Game getGame(long gameId) {
+        Session session = sessionFactory.openSession();
+        Game game = session.get(Game.class, gameId);
+        Hibernate.initialize(game.getTeams());
+        session.close();
+        return game;
+    }
 }

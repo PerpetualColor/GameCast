@@ -3,11 +3,13 @@ package xyz.advtopics.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import xyz.advtopics.objects.Event;
+import xyz.advtopics.objects.Game;
 import xyz.advtopics.objects.Team;
 import xyz.advtopics.objects.DTOs.GameDTO;
 import xyz.advtopics.services.GameService;
@@ -68,7 +70,11 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(events); 
     }
 
-
+    @GetMapping("/getGame") 
+    public ResponseEntity<Game> getGame(long gameId) {
+        Game g = gameService.getGame(gameId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(g);
+    }
 
 
 }

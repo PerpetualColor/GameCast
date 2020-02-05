@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Game } from './model-objects/game';
+import { BackendService } from './backend.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +10,8 @@ export class GameStatusService {
 
   public score$: Observable<number[]>;
   private score: number[] = [0, 0];
+
+  public game: Game;
 
   scoreSubscriber() {
     const observers = [];
@@ -39,11 +43,17 @@ export class GameStatusService {
     
   }
 
+  public selectGame(gameId: number) {
+    this.backendService.getGame(gameId).subscribe({
+      next: result => { this.game = result.body }
+    });
+  }
+
   parseEvent(event: Event) {
     
   }
 
-  constructor() {
+  constructor(private backendService: BackendService) {
     this.score$ = new Observable(this.scoreSubscriber());
   }
 }

@@ -1,13 +1,13 @@
 <div class="mat-elevation-z4">
     <h3>Create a New Game</h3>
     <mat-form-field class="gameDatepicker">
-        <input matInput [matDatepicker]="gameDatepicker" placeholder="Choose a date">
+        <input matInput [matDatepicker]="gameDatepicker" placeholder="Choose a date" [(ngModel)]="dateSelect">
         <mat-datepicker-toggle matSuffix [for]="gameDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #gameDatepicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Time</mat-label>
-        <input matInput type="time">
+        <input matInput type="time" [(ngModel)]="timeSelect">
     </mat-form-field>
     <br>
     <mat-form-field class="gameDatepicker">
@@ -25,5 +25,5 @@
         </mat-select>
     </mat-form-field>
     <br>
-    <button mat-raised-button color="primary">Create</button>
+    <button mat-raised-button color="primary" (click)="createGame()">Create</button>
 </div>
