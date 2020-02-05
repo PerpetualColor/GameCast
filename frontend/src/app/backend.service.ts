@@ -55,6 +55,5 @@ export class BackendService {
     console.error("Error: ", error.error.message);
     return throwError(error);
   }
-
   
 }
