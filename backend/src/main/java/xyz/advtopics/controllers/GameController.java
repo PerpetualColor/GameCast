@@ -27,8 +27,8 @@ public class GameController {
 
     //Doesn't this need some form of name?
     @PostMapping("/createGame")
-    public ResponseEntity<String> createGame(@RequestBody GameDTO game, long gameID) {
-        gameService.createGame(game, gameID);
+    public ResponseEntity<String> createGame(@RequestBody GameDTO game) {
+        gameService.createGame(game);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Created");               
     }
 

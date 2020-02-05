@@ -20,14 +20,14 @@ public class GameService {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void createGame(GameDTO gameto, long gameID) {
+    public void createGame(GameDTO gameto) {
         Session session = sessionFactory.openSession();
         Game game = new Game();
         List<Team> teams = new ArrayList<Team>();
 
         //Set the teams 
         for(int i = 0; i < gameto.teamIds.length;i++){
-            Team team = session.get(Team.class, gameID);
+            Team team = session.get(Team.class, gameto.teamIds[i]);
             game.addTeamToGame(team);
         }
         //Set the time
