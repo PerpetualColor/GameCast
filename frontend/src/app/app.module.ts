@@ -16,6 +16,7 @@ import { RosterComponent } from './roster/roster.component';
 import { EventConsoleComponent } from './event-console/event-console.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CreateGameComponent } from './create-game/create-game.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { CreateGameComponent } from './create-game/create-game.component';
     MatCardModule,
     HttpClientModule,
     AppRoutingModule,
+    FormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
     ScrollingModule,
@@ -41,7 +43,6 @@ import { CreateGameComponent } from './create-game/create-game.component';
     MatNativeDateModule,
     MatInputModule,
     MatSelectModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]

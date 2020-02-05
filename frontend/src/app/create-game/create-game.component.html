@@ -11,10 +11,18 @@
     </mat-form-field>
     <br>
     <mat-form-field class="gameDatepicker">
-        <mat-select placeholder="Choose home team"></mat-select>
+        <mat-select placeholder="Choose home team" (selectionChange)="filterTeams()" [(ngModel)]="homeTeamSelect">
+            <mat-option *ngFor="let team of homeTeams" [value]="team.id">
+                {{ team.name }}
+            </mat-option>
+        </mat-select>
     </mat-form-field>
     <mat-form-field>
-        <mat-select placeholder="Choose guest team"></mat-select>
+        <mat-select placeholder="Choose guest team" (selectionChange)="filterTeams()" [(ngModel)]="guestTeamSelect">
+            <mat-option *ngFor="let team of guestTeams" [value]="team.id">
+                {{ team.name }}
+            </mat-option>
+        </mat-select>
     </mat-form-field>
     <br>
     <button mat-raised-button color="primary">Create</button>
