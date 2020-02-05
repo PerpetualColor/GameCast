@@ -13,10 +13,10 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  // getHelloMessage() {
-  //   this.backendService.getEvent(1).subscribe(result => {
-  //     console.dir(result.body);
-  //   });
-  // }
+  getHelloMessage() {
+    // this.backendService.getEvent(1).subscribe(result => {
+    //   console.dir(result.body);
+    // });
+  }
 
 }
