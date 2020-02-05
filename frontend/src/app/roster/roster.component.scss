@@ -1,18 +1,23 @@
 .column{
    float: left;
-   height: 20%;
-   padding: 0 8px;
    width: 100%;
-}
-
-.h1{
-    font-style:arial;
+   padding: 0 8px
 }
 
 .container{
-    padding: 10px;
+    padding: 20px;
 }
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     background-color: rgb(227, 255, 221);
+}
+
+ul{
+    list-style-type: none;
+}
+
+.playerList li {
+    font-size: 10;
+    margin-bottom: 5px;
+    background-color: rgb(255, 255, 255);
 }
