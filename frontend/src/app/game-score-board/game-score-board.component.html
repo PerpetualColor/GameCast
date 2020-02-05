@@ -1,10 +1,9 @@
-<!-- <mat-card>game-score-board works!</mat-card> -->
 
 <div class="game-score-board">
         <p>
             <mat-card>
                 <img src="assets/imgOak.jpeg">
-                game-score-board works!
+                <h3 class="scoreDetector">Score: {{ score[0] }} {{ score[1] }}</h3>
                 <img src="assets/berniker.jpg">
             </mat-card>
 
@@ -12,24 +11,3 @@
 
 
 </div>
-
-
-
-<!-- <mat-card>
-    <h3 class="scoreBoard"></h3>
-    <h3>Events: </h3>
-    <cdk-virtual-scroll-viewport itemSize="50" class="event-viewport">
-        <div *cdkVirtualFor="let e of events" class="event">{{ e.data }}</div>
-      </cdk-virtual-scroll-viewport>
-      
-</mat-card> -->
-
-
-
-<!-- <div class="game-score-board">
-    <div class="homeLink">
-        <p>
-            <a routerLink="/home">GameCast</a>
-        </p>
-    </div>
-</div> -->
