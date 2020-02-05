@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import xyz.advtopics.objects.Event;
 import xyz.advtopics.objects.Team;
+import xyz.advtopics.objects.DTOs.GameDTO;
 import xyz.advtopics.services.GameService;
 
 import java.util.List;
@@ -25,8 +27,8 @@ public class GameController {
 
     //Doesn't this need some form of name?
     @PostMapping("/createGame")
-    public ResponseEntity<String> createGame() {
-        gameService.createGame();
+    public ResponseEntity<String> createGame(@RequestBody GameDTO game, long gameID) {
+        gameService.createGame(game, gameID);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Created");               
     }
 

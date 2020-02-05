@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import xyz.advtopics.objects.Event;
 import xyz.advtopics.objects.Game;
 import xyz.advtopics.objects.Team;
+import xyz.advtopics.objects.DTOs.GameDTO;
 
 @Service
 public class GameService {
@@ -19,12 +20,19 @@ public class GameService {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void createGame() {
+    public void createGame(GameDTO gameto, long gameID) {
         Session session = sessionFactory.openSession();
         Game game = new Game();
-
         List<Team> teams = new ArrayList<Team>();
-        game.setTeams(teams);
+
+        //Set the teams 
+        for(int i = 0; i < gameto.teamIds.length;i++){
+            Team team = session.get(Team.class, gameID);
+            game.addTeamToGame(team);
+        }
+        //Set the time
+        game.setDateTime(gameto.dateTime);
+
         session.beginTransaction();
         session.persist(game);
         session.getTransaction().commit();
