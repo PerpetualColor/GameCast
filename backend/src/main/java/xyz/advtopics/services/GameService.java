@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import xyz.advtopics.objects.Event;
 import xyz.advtopics.objects.Game;
 import xyz.advtopics.objects.Team;
+import xyz.advtopics.objects.DTOs.GameDTO;
 
 @Service
 public class GameService {
@@ -19,12 +20,19 @@ public class GameService {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void createGame() {
+    public void createGame(GameDTO gameto) {
         Session session = sessionFactory.openSession();
         Game game = new Game();
-
         List<Team> teams = new ArrayList<Team>();
-        game.setTeams(teams);
+
+        //Set the teams 
+        for(int i = 0; i < gameto.teamIds.length;i++){
+            Team team = session.get(Team.class, gameto.teamIds[i]);
+            game.addTeamToGame(team);
+        }
+        //Set the time
+        game.setDateTime(gameto.dateTime);
+
         session.beginTransaction();
         session.persist(game);
         session.getTransaction().commit();
@@ -62,6 +70,10 @@ public class GameService {
         Game game = session.get(Game.class, gameID);
         Hibernate.initialize(game.getTeams());
         List<Team> teams = game.getTeams();
+<<<<<<< HEAD
+        Hibernate.initialize(game.getTeams());
+=======
+>>>>>>> 463900bf2be9d0e8e5ec599b6596fbef2af11f64
         session.close();
         
         return teams;
@@ -71,14 +83,14 @@ public class GameService {
         Session session = sessionFactory.openSession();
         Game game = session.get(Game.class, gameID);
         List<Event> events = game.getEvents();
-        session.beginTransaction();
-        session.persist(game);
-        session.getTransaction().commit();
         session.close();
         
         return events;
     }
 
+<<<<<<< HEAD
+    
+=======
     public void setEvents(long gameID, List<Event> events) {
         Session session = sessionFactory.openSession();
         Game game = session.get(Game.class, gameID);
@@ -88,4 +100,5 @@ public class GameService {
         session.getTransaction().commit();
         session.close();
     }
+>>>>>>> 463900bf2be9d0e8e5ec599b6596fbef2af11f64
 }

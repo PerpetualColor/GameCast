@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/htt
 import { Observable, throwError } from 'rxjs';
 import { catchError} from 'rxjs/operators';
 import { Team } from './model-objects/team';
+import { Game } from './model-objects/game';
 
 const baseUrl = 'http://localhost:8080';
 
@@ -57,6 +58,18 @@ export class BackendService {
   private handleError(error: HttpErrorResponse) {
     console.error("Error: ", error.error.message);
     return throwError(error);
+  }
+
+  getGame(gameID: number): Observable<HttpResponse<Game>> {
+    return this.http.get<Game>(`${baseUrl}/getGame`, {
+      withCredentials: false,
+      observe: 'response',
+      params: {
+        gameID: gameID.toString()
+      }
+    }).pipe(
+      catchError(error => this.handleError(error))
+    );
   }
   
 }
