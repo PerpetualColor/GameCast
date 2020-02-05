@@ -1,6 +1,10 @@
 package xyz.advtopics.services;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,6 +39,15 @@ public class TeamService {
         Team team = session.get(Team.class, teamID);
         session.close();
         return team;
+    }
+
+    public List<Team> getAllTeams() {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Team> criteria = builder.createQuery(Team.class);
+        criteria.from(Team.class);
+        List<Team> teams = session.createQuery(criteria).getResultList();
+        return teams;
     }
 
 }
