@@ -1,6 +1,5 @@
 package xyz.advtopics.services;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -17,7 +16,7 @@ public class EventService{
     private SessionFactory sessionFactory;
 
     // adds an event
-    public void addEvent(String eventData, LocalDateTime eventDate){
+    public void addEvent(String eventData, long eventDate){
         Session session = sessionFactory.openSession();
         Event e = new Event();
         e.setData(eventData);
@@ -28,7 +27,7 @@ public class EventService{
         session.close();
     } 
 
-    public void createAndAddEvent(String eventData, LocalDateTime eventDate, long gameId) {
+    public void createAndAddEvent(String eventData, long eventDate, long gameId) {
         Session session = sessionFactory.openSession();
         Event e = new Event();
         e.setData(eventData);
@@ -48,7 +47,6 @@ public class EventService{
     // returns the event 
     public Event getEvent(long eventId){
         Session session = sessionFactory.openSession();
-        System.out.println("Getting event");
         Event e = session.get(Event.class, eventId);
         session.close();
         return e;
