@@ -1,8 +1,48 @@
+$height: 7em;
+
 .game-score-board {
-    margin-left: 0%;
     width: 60%;
-    margin: auto;
-    font-size: 1.5em;
+    margin-bottom: 3em;
     display: grid;
-    grid-template-rows: 10%;
+    grid-template-columns: 50% 50%;
+    height: $height;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.score-left {
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: min-content min-content auto;
+    height: 100%;
+    text-align: left;
+}
+
+.score-right {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: auto min-content min-content;
+    height: 100%;
+    text-align: right;
+}
+
+img {
+    max-height: $height;
+}
+
+.left-img {
+    margin-left: auto;
+    padding-left: 1em;
+}
+
+.right-img {
+    padding-right: 1em;
+}
+
+.score-value {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 2em;
+    margin-right: 2em;
+    font-size: 3em;
 }

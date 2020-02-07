@@ -3,6 +3,6 @@
 <div class="allGames">
     <div class="gameSelect" *ngFor="let game of games">
         <br>
-        <button mat-raised-button (color)="primary" (click)="setGameAndRedirect(game)">{{ game.teams[0].name }} vs {{ game.teams[1].name }}</button>
+        <button mat-raised-button color="primary" (click)="setGameAndRedirect(game)">{{ game.teams[0].name }} vs {{ game.teams[1].name }}</button>
     </div>
 </div>

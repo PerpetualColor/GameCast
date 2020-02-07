@@ -30,17 +30,5 @@ export class EventConsoleComponent implements OnInit {
         console.log("subscribe complete");
       }
     });
-
-    let testSocket = webSocket({
-      url: "ws://localhost:8080/webSocket"
-    });
-
-    testSocket.asObservable().subscribe(
-      msg => console.dir(msg),
-      err => console.dir(err),
-      () => console.log("Websocket closed")
-    );
-
-    testSocket.next(new MessageEvent("string"));
   }
 }

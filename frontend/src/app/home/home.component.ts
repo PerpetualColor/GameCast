@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   }
 
   setGameAndRedirect(game: Game) {
-    this.gameStatusService.game = game;
+    this.gameStatusService.selectGame(game);
     this.router.navigate([ "/gamecast" ]);
 
   }

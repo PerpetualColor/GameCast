@@ -9,11 +9,15 @@ import org.springframework.stereotype.Service;
 
 import xyz.advtopics.objects.Event;
 import xyz.advtopics.objects.Game;
+import xyz.advtopics.websocket.SocketHandler;
 
 @Service
 public class EventService{
     @Autowired
     private SessionFactory sessionFactory;
+    
+    @Autowired
+    private SocketHandler socketHandler;
 
     // adds an event
     public void addEvent(String eventData, long eventDate){
@@ -37,11 +41,15 @@ public class EventService{
         e.setGame(g);
         g.addEvents(e);
 
+
         session.beginTransaction();
         session.persist(e);
         session.update(g);
         session.getTransaction().commit();
         session.close();
+        
+        e.setId(e.getId());
+        socketHandler.sendToGame(g, e);
     }
 
     // returns the event 

@@ -46,7 +46,7 @@ public class EventController{
      */
     @PostMapping("/createAndAddEvent")
     public ResponseEntity<String> createAndAddEvent(@RequestParam String eventData, @RequestParam long eventDate, @RequestParam long gameId) {
-        eventService.createAndAddEvent(eventData, System.currentTimeMillis(), gameId);
+        eventService.createAndAddEvent(eventData, eventDate, gameId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Success");
     }
 
