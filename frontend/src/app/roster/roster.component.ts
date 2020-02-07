@@ -18,12 +18,15 @@ export class RosterComponent implements OnInit {
     let homeID = this.gameStatusService.game.teams[0].id;
     let guestID = this.gameStatusService.game.teams[1].id;
     this.backendService.getTeam(homeID).subscribe({
-      next: result => { this.home = result.body;
-      console.dir(this.home); }
+      next: result => { 
+        this.home = result.body;
+        console.dir(this.home);
+       }
     });
     this.backendService.getTeam(guestID).subscribe({
-      next: result => { this.guest = result.body; 
-      console.dir(this.guest); }
+      next: result => { 
+        this.guest = result.body;
+       }
     });
   }
 

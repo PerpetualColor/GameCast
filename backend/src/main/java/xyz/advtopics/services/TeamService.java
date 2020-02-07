@@ -50,4 +50,18 @@ public class TeamService {
         return teams;
     }
 
+    public void createAndAddPlayer(String name, int number, long teamId) {
+        Session session = sessionFactory.openSession();
+        Player p = new Player();
+        p.setName(name);
+        p.setNumber(number);
+        Team t = session.get(Team.class, teamId);
+        p.setTeam(t);
+
+        session.beginTransaction();
+        session.persist(p);
+        session.getTransaction().commit();
+        session.close();
+    }
+
 }

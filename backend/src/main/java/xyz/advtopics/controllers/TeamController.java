@@ -37,4 +37,10 @@ public class TeamController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(teamService.getAllTeams());
     }
 
+    @PostMapping("/createAndAddPlayer")
+    public ResponseEntity<String> createAndAddPlayer(@RequestParam String name, @RequestParam int number, @RequestParam long teamId) {
+        teamService.createAndAddPlayer(name, number, teamId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Success");
+    }
+
 }
