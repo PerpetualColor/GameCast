@@ -45,7 +45,7 @@ export class GameStatusService {
 
   public selectGame(gameId: number) {
     this.backendService.getGame(gameId).subscribe({
-      next: result => { this.game = result.body }
+      next: result => { this.game = result.body; console.log("Fetched"); }
     });
   }
 

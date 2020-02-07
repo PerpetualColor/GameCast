@@ -1,22 +1,27 @@
-<div class="scoreboard">    
-    <app-game-score-board></app-game-score-board>
-</div>
-<div class="grid-container">
-    <div class="grid-roster">
-        <app-roster></app-roster>
+<div class="gamedisp" *ngIf="game != undefined; else noGame">
+    <div class="scoreboard">
+        <app-game-score-board></app-game-score-board>
     </div>
-    <div class="grid-center">
-        <div class="grid-display">
-            
+    <div class="grid-container">
+        <div class="grid-roster">
+            <app-roster></app-roster>
         </div>
-        <div class="grid-gamecast">
+        <div class="grid-center">
+            <div class="grid-display">
+
+            </div>
+            <div class="grid-gamecast">
+
+            </div>
+            <div class="grid-events">
+                <app-event-console></app-event-console>
+            </div>
+        </div>
+        <div class="grid-chat">
 
         </div>
-        <div class="grid-events">
-            <app-event-console></app-event-console>
-        </div>
-    </div>
-    <div class="grid-chat">
-
     </div>
 </div>
+<ng-template #noGame>
+    <h1>Please select a game first</h1>
+</ng-template>

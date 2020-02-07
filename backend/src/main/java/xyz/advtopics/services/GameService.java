@@ -3,6 +3,9 @@ package xyz.advtopics.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -101,5 +104,18 @@ public class GameService {
         Hibernate.initialize(game.getTeams());
         session.close();
         return game;
+    }
+    
+    public List<Game> getAllGames() {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Game> criteria = builder.createQuery(Game.class);
+        criteria.from(Game.class);
+        List<Game> games = session.createQuery(criteria).getResultList();
+        for (Game g : games) {
+            Hibernate.initialize(g.getTeams());
+        }
+        session.close();
+        return games;
     }
 }

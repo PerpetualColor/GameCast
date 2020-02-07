@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
 import { GameStatusService } from '../game-status.service';
+import { Game } from '../model-objects/game';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,16 +11,28 @@ import { GameStatusService } from '../game-status.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private backendService: BackendService, private gameStatusService: GameStatusService) { }
+  constructor(private backendService: BackendService, private gameStatusService: GameStatusService, private router: Router) { }
+
+  games: Game[];
 
   ngOnInit() {
-    this.gameStatusService.selectGame(1);
+    this.backendService.getAllGames().subscribe({
+      next: result => {
+        this.games = result.body;
+      }
+    });
   }
 
   getHelloMessage() {
     // this.backendService.getEvent(1).subscribe(result => {
     //   console.dir(result.body);
     // });
+  }
+
+  setGameAndRedirect(game: Game) {
+    this.gameStatusService.game = game;
+    this.router.navigate([ "/gamecast" ]);
+
   }
 
 }

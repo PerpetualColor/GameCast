@@ -25,7 +25,6 @@ export class RosterComponent implements OnInit {
       next: result => { this.guest = result.body; 
       console.dir(this.guest); }
     });
-    console.log("homeID: " + homeID + ", guestID: " + guestID);
   }
 
 }

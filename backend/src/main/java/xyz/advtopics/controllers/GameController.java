@@ -76,5 +76,9 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(g);
     }
 
+    @GetMapping("/getAllGames")
+    public ResponseEntity<List<Game>> getAllGames() {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(gameService.getAllGames());
+    }
 
 }

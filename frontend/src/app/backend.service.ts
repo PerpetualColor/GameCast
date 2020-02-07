@@ -66,7 +66,7 @@ export class BackendService {
       withCredentials: false,
       observe: 'response',
       params: {
-        gameID: gameID.toString()
+        gameId: gameID.toString()
       }
     }).pipe(
       catchError(error => this.handleError(error))
@@ -78,6 +78,15 @@ export class BackendService {
       withCredentials: false,
       observe: 'response',
       responseType: 'text'
+    }).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  getAllGames(): Observable<HttpResponse<Game[]>> {
+    return this.http.get<Game[]>(`${baseUrl}/getAllGames`, {
+      withCredentials: false,
+      observe: 'response'
     }).pipe(
       catchError(error => this.handleError(error))
     );

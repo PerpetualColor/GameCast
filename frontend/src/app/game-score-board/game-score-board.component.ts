@@ -18,7 +18,6 @@ export class GameScoreBoardComponent implements OnInit {
   ngOnInit() {
     this.events = [{ id: 1, data: "example", dateTime: new Date() }];
 
-    console.dir(this.events);
     this.score = [0, 0];
 
     this.gameStatusService.score$.subscribe({

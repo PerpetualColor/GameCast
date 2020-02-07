@@ -1,13 +1,15 @@
 
 <div class="game-score-board">
         <p>
-            <mat-card>
+            <mat-card class="score-left">
                 <img src="assets/imgOak.jpeg">
-                <h3 class="scoreDetector">Score: {{ score[0] }} {{ score[1] }}</h3>
+                <h2>Oakwood</h2>
+                <h3>{{ score[0] }}</h3>
+            </mat-card>
+            <mat-card class="score-right">
+                <h3>{{ score[1] }}</h3>
+                <h2>Guest</h2>
                 <img src="assets/berniker.jpg">
             </mat-card>
-
         </p>
-
-
 </div>
