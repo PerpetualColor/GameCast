@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -19,6 +21,9 @@ public class Player{
     // private int ranking; (may or may not be used)
     private Team team;
 
+    public Player() {
+
+    }
 
     public Player(int number, String name, String teamName /*,int ranking*/){
         this.number = number;
@@ -68,6 +73,7 @@ public class Player{
 
     @ManyToOne
     @JoinColumn(name = "team_id", nullable = false)
+    @JsonIgnore
     public Team getTeam() {
         return team;
     }
