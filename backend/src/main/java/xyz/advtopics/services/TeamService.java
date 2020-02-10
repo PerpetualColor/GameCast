@@ -47,6 +47,7 @@ public class TeamService {
         CriteriaQuery<Team> criteria = builder.createQuery(Team.class);
         criteria.from(Team.class);
         List<Team> teams = session.createQuery(criteria).getResultList();
+        session.close();
         return teams;
     }
 
