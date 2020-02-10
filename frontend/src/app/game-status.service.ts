@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Game } from './model-objects/game';
 import { BackendService } from './backend.service';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
@@ -10,7 +10,8 @@ import { Event } from './model-objects/event';
 })
 export class GameStatusService {
 
-  public score$: Observable<number[]>;
+  public score$: Subject<number[]>;
+  public events$: Subject<Event>;
   private score: number[] = [0, 0];
   private gameSocket: WebSocketSubject<any>;
 
@@ -21,22 +22,11 @@ export class GameStatusService {
     score[1] += 2;
   }
 
-  scoreSubscriber() {
+  eventSubscriber() {
     const observers = [];
-
-    setInterval(() => {
-      this.incScore(this.score);
-      observers.forEach(obs => obs.next(this.score));
-    }, 1000);
-
-    // return the subscriber function
+    
     return (observer) => {
       observers.push(observer);
-
-      observers.forEach(obs => obs.next(this.score));
-
-      // replace this with logic for receiving score updates
-
 
       return {
         unsubscribe() {
@@ -44,9 +34,6 @@ export class GameStatusService {
         }
       }
     }
-
-    // return the unsubscribe function
-
   }
 
   public selectGame(game: Game) {
@@ -57,7 +44,10 @@ export class GameStatusService {
       });
     }
     this.gameSocket.asObservable().subscribe(
-      msg => console.dir(msg)
+      msg => { 
+        console.dir(msg);
+        this.events$.next(msg as Event);
+      }
     );
     this.gameSocket.next(game.id);
   }
@@ -67,6 +57,12 @@ export class GameStatusService {
   }
 
   constructor(private backendService: BackendService) {
-    this.score$ = new Observable(this.scoreSubscriber());
+    this.score$ = new Subject();
+    setInterval(() => {
+      this.incScore(this.score);
+      this.score$.next(this.score);
+    }, 1000);
+
+    this.events$ = new Subject();
   }
 }

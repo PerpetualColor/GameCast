@@ -91,5 +91,20 @@ export class BackendService {
       catchError(error => this.handleError(error))
     );
   }
+
+  createAndAddEvent(eventData: string, eventDate: number, gameId: number): Observable<HttpResponse<String>> {
+    return this.http.post(`${baseUrl}/createAndAddEvent`, {}, {
+      withCredentials: false,
+      observe: 'response',
+      responseType: 'text',
+      params: {
+        eventData: eventData,
+        eventDate: eventDate.toString(),
+        gameId: gameId.toString(),
+      }
+    }).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
   
 }

@@ -1,7 +1,7 @@
 export class Event {
     id: number;
     data: string;
-    dateTime: Date;
+    dateTime: any;
 
     public toString = () : string => {
         return this.data;

@@ -10,13 +10,12 @@ import { GameStatusService } from '../game-status.service';
 export class GameScoreBoardComponent implements OnInit {
 
 
-  events: Event[] = [{ id: 1, data: "example", dateTime: new Date() }];
+  events: Event[];
   score: number[];
   scoreChangeDetector: ChangeDetectorRef;
 
   constructor(private gameStatusService: GameStatusService) { }
   ngOnInit() {
-    this.events = [{ id: 1, data: "example", dateTime: new Date() }];
 
     this.score = [0, 0];
 
