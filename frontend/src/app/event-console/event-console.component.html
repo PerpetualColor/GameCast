@@ -1,20 +1,15 @@
-<div class="mat-elevation-z4">
-  <h3>
-    <mat-card>
-      <h3>Events: </h3>
-      <cdk-virtual-scroll-viewport itemSize="50" class="event-viewport">
-          <div *cdkVirtualFor="let e of events" class="event">{{ e.data }}</div>
-        </cdk-virtual-scroll-viewport>
-        
-    </mat-card>
+<mat-card>
+  <h3>Events</h3>
+  <div class="viewport-container">
+    <cdk-virtual-scroll-viewport itemSize="40" class="event-viewport">
+      <ng-container *cdkVirtualFor="let e of events" class="event">
+        <p><b>{{ e.dateTime | date:'h:mm:ss aa: ' }}</b> {{ e.data }}</p>
+      </ng-container>
+    </cdk-virtual-scroll-viewport>
+  </div>
+  <mat-form-field>
+    <input matInput placeholder="Event information" (keydown.enter)="submitEvent()" [(ngModel)]="readyData" value="">
+  </mat-form-field>
+  <button mat-button (click)="submitEvent()">Submit</button>
 
-    <mat-option *ngFor="let team of homeTeams" [value]="team.id">
-      {{ team.name }}
-    </mat-option>
-
-  </h3>
-</div>
-  
-  
-  
-
+</mat-card>
