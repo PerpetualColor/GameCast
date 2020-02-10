@@ -1,8 +1,20 @@
-<mat-card>
-    <h3 class="scoreDetector">Score: {{ score[0] }} {{ score[1] }}</h3>
-    <h3>Events: </h3>
-    <cdk-virtual-scroll-viewport itemSize="50" class="event-viewport">
-        <div *cdkVirtualFor="let e of events" class="event">{{ e.data }}</div>
-      </cdk-virtual-scroll-viewport>
-      
-</mat-card>
+<div class="mat-elevation-z4">
+  <h3>
+    <mat-card>
+      <h3>Events: </h3>
+      <cdk-virtual-scroll-viewport itemSize="50" class="event-viewport">
+          <div *cdkVirtualFor="let e of events" class="event">{{ e.data }}</div>
+        </cdk-virtual-scroll-viewport>
+        
+    </mat-card>
+
+    <mat-option *ngFor="let team of homeTeams" [value]="team.id">
+      {{ team.name }}
+    </mat-option>
+
+  </h3>
+</div>
+  
+  
+  
+
