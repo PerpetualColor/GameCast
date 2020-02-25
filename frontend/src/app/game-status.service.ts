@@ -68,7 +68,7 @@ export class GameStatusService {
     setInterval(() => {
       this.incScore(this.score, this.fouls);
       this.score$.next(this.score);
-      this.foul$.next(this.score);
+      this.foul$.next(this.fouls);
     }, 1000);
 
     this.events$ = new Subject();
