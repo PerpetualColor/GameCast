@@ -5,11 +5,12 @@
             <mat-tab-group dynamicHeight mat-stretch-tabs class="teams">
                 <mat-tab label = "Team 1"> 
                     <ul class="playerList">
-                        <li>Player 1</li>
+                        <!-- <li>Player 1</li>
                         <li>Player 2</li>
                         <li>Player 3</li>
                         <li>Player 4</li>
-                        <li>Player 5</li>
+                        <li>Player 5</li> -->
+                        <li *ngFor="let player of homeRoster">{{ player.name }}</li>
                     </ul>
                 </mat-tab>  
                 <mat-tab label = "Team 2">

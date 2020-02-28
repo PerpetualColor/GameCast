@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSelectModule,
     FormsModule,
     MatTabsModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
