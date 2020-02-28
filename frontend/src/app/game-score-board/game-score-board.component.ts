@@ -13,6 +13,7 @@ export class GameScoreBoardComponent implements OnInit {
   events: Event[];
   score: number[];
   scoreChangeDetector: ChangeDetectorRef;
+  fouls: number[];
 
   constructor(private gameStatusService: GameStatusService) { }
   ngOnInit() {
