@@ -27,5 +27,14 @@ export class GameScoreBoardComponent implements OnInit {
         console.log("subscribe complete");
       }
     });
+
+    this.gameStatusService.foul$.subscribe({
+      next: val => {
+        this.fouls = val;
+      },
+      complete: () => {
+        console.log("subscribe complete");
+      }
+    })
   }
 }

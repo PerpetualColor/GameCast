@@ -5,6 +5,7 @@ import { catchError} from 'rxjs/operators';
 import { Team } from './model-objects/team';
 import { Game } from './model-objects/game';
 import { GameDto } from './model-objects/gameDto';
+import { environment } from 'src/environments/environment';
 
 const baseUrl = 'http://localhost:8080';
 
