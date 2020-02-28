@@ -12,15 +12,21 @@ export class GameStatusService {
 
   public score$: Subject<number[]>;
   public events$: Subject<Event>;
+  public foul$: Subject<number[]>;
   private score: number[] = [0, 0];
+  private fouls: number[] = [0,0];
   private gameSocket: WebSocketSubject<any>;
 
   public game: Game;
 
-  incScore(score) {
+  incScore(score, fouls) {
     score[0] += 1;
     score[1] += 2;
+    fouls[0] += 1;
+    fouls[1] += 1;
   }
+
+ 
 
   eventSubscriber() {
     const observers = [];
@@ -58,9 +64,11 @@ export class GameStatusService {
 
   constructor(private backendService: BackendService) {
     this.score$ = new Subject();
+    this.foul$ = new Subject();
     setInterval(() => {
-      this.incScore(this.score);
+      this.incScore(this.score, this.fouls);
       this.score$.next(this.score);
+      this.foul$.next(this.fouls);
     }, 1000);
 
     this.events$ = new Subject();
