@@ -1,8 +1,9 @@
 .grid-container {
     display: grid;
-    grid-template-columns: 30% 40% 30%;
+    grid-template-columns: minmax(min-content, 30%) minmax(min-content, 40%) minmax(min-content, 30%);
     gap: 20px;
 }
+
 
 .grid-roster {
     grid-column: 1;
