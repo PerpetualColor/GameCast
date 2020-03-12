@@ -24,6 +24,8 @@ export class GameStatusService {
     score[1] += 2;
     fouls[0] += 1;
     fouls[1] += 1;
+
+    console.log(this.backendService.baseUrl);
   }
 
  

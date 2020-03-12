@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
     // this.backendService.getEvent(1).subscribe(result => {
     //   console.dir(result.body);
     // });
+    console.dir({ name: "hello", value: "testing"});
   }
 
   setGameAndRedirect(game: Game) {
