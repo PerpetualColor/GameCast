@@ -19,6 +19,7 @@ export class GameScoreBoardComponent implements OnInit {
   ngOnInit() {
 
     this.score = [0, 0];
+    this.fouls = [0, 0];
 
     this.gameStatusService.score$.subscribe({
       next: val => {

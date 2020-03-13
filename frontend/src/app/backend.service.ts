@@ -7,19 +7,17 @@ import { Game } from './model-objects/game';
 import { GameDto } from './model-objects/gameDto';
 import { environment } from 'src/environments/environment';
 
-// const this.baseUrl = 'ubuntu@ec2-18-144-88-105.us-west-1.compute.amazonaws.com:8080';
+const baseUrl = 'http://localhost:8080';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
 
-  readonly baseUrl = 'ubuntu@ec2-18-144-88-105.us-west-1.compute.amazonaws.com:8080';
-
   constructor(private http: HttpClient) { }
 
   getHelloWorld(): Observable<HttpResponse<string>> {
-    return this.http.get(`http://${this.baseUrl}/helloworld`, {
+    return this.http.get(`${baseUrl}/helloworld`, {
       withCredentials: false,
       observe: 'response',
       responseType: 'text',
@@ -29,7 +27,7 @@ export class BackendService {
   }
 
   getAllTeams(): Observable<HttpResponse<Team[]>> {
-    return this.http.get<Team[]>(`http://${this.baseUrl}/getAllTeams`, {
+    return this.http.get<Team[]>(`${baseUrl}/getAllTeams`, {
       withCredentials: false,
       observe: 'response'
     }).pipe(
@@ -38,7 +36,7 @@ export class BackendService {
   }
 
   getTeam(teamId: number): Observable<HttpResponse<Team>> {
-    return this.http.get<Team>(`http://${this.baseUrl}/getTeam`, {
+    return this.http.get<Team>(`${baseUrl}/getTeam`, {
       withCredentials: false,
       observe: 'response',
       params: {
@@ -50,7 +48,7 @@ export class BackendService {
   }
 
   createTeam(): Observable<HttpResponse<string>> {
-    return this.http.post(`http://${this.baseUrl}/createTeam`, { name: "Dave", players: []}, {
+    return this.http.post(`${baseUrl}/createTeam`, { name: "Dave", players: []}, {
       withCredentials: false,
       observe: 'response',
       responseType: 'text'
@@ -59,13 +57,15 @@ export class BackendService {
     );
   }
 
+  
+
   private handleError(error: HttpErrorResponse) {
     console.error("Error: ", error.error.message);
     return throwError(error);
   }
 
   getGame(gameID: number): Observable<HttpResponse<Game>> {
-    return this.http.get<Game>(`http://${this.baseUrl}/getGame`, {
+    return this.http.get<Game>(`${baseUrl}/getGame`, {
       withCredentials: false,
       observe: 'response',
       params: {
@@ -77,7 +77,7 @@ export class BackendService {
   }
 
   createGame(game: GameDto): Observable<HttpResponse<string>> {
-    return this.http.post(`http://${this.baseUrl}/createGame`, game, {
+    return this.http.post(`${baseUrl}/createGame`, game, {
       withCredentials: false,
       observe: 'response',
       responseType: 'text'
@@ -87,7 +87,7 @@ export class BackendService {
   }
 
   getAllGames(): Observable<HttpResponse<Game[]>> {
-    return this.http.get<Game[]>(`http://${this.baseUrl}/getAllGames`, {
+    return this.http.get<Game[]>(`${baseUrl}/getAllGames`, {
       withCredentials: false,
       observe: 'response'
     }).pipe(
@@ -96,7 +96,7 @@ export class BackendService {
   }
 
   createAndAddEvent(eventData: string, eventDate: number, gameId: number): Observable<HttpResponse<String>> {
-    return this.http.post(`http://${this.baseUrl}/createAndAddEvent`, {}, {
+    return this.http.post(`${baseUrl}/createAndAddEvent`, {}, {
       withCredentials: false,
       observe: 'response',
       responseType: 'text',

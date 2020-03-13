@@ -24,10 +24,7 @@ export class HomeComponent implements OnInit {
   }
 
   getHelloMessage() {
-    // this.backendService.getEvent(1).subscribe(result => {
-    //   console.dir(result.body);
-    // });
-    console.dir({ name: "hello", value: "testing"});
+    console.dir(this.gameStatusService.parseEvent({id: -1, dateTime: new Date(), data: "14h f"}));
   }
 
   setGameAndRedirect(game: Game) {

@@ -16,7 +16,7 @@ export class EventConsoleComponent implements OnInit {
   scoreChangeDetector: ChangeDetectorRef;
   readyData: string;
 
-  @ViewChild(CdkVirtualScrollViewport) viewPort: CdkVirtualScrollViewport;
+  @ViewChild(CdkVirtualScrollViewport, { static: false }) viewPort: CdkVirtualScrollViewport;
 
   constructor(private gameStatusService: GameStatusService, private backendService: BackendService) { }
 
