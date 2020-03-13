@@ -14,7 +14,6 @@ export class RosterComponent implements OnInit {
   home: Team;
 
   homeRoster: Player[];
-  guestRoster: Player[];
 
   constructor(private backendService: BackendService, private gameStatusService: GameStatusService) { }
 
@@ -24,14 +23,13 @@ export class RosterComponent implements OnInit {
     this.backendService.getTeam(homeID).subscribe({
       next: result => { 
         this.home = result.body;
-        console.dir(this.home);
         this.homeRoster = result.body.players;
+        console.dir(this.homeRoster);
        }
     });
     this.backendService.getTeam(guestID).subscribe({
       next: result => { 
         this.guest = result.body;
-        this.guestRoster = result.body.players;
        }
     });
   }

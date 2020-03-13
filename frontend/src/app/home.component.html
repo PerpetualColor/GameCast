@@ -1,0 +1,22 @@
+<div class = "centerMessage">
+    <button mat-raised-button><h3>Welcome!</h3></button>
+</div>
+<a routerLink="/newgame">Create a game</a>
+<div class = "gameList"><mat-tab-group dynamicHeight mat-stretch-tabs>
+    <mat-tab label = "Games">
+        <ul>
+            <div class="allGames">
+                <div class="gameSelect" *ngFor="let game of games" (click)="setGameAndRedirect(game)">
+                    <li>{{ game.teams[0].name }} vs {{ game.teams[1].name }}</li>
+                </div>
+            </div>
+        </ul>
+    </mat-tab>
+</mat-tab-group>
+</div>
+<!-- <div class="allGames">
+    <div class="gameSelect" *ngFor="let game of games">
+        <br>
+        <button mat-raised-button color="primary" (click)="setGameAndRedirect(game)">{{ game.teams[0].name }} vs {{ game.teams[1].name }}</button>
+    </div>
+</div> -->
