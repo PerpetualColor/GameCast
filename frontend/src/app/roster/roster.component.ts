@@ -18,20 +18,8 @@ export class RosterComponent implements OnInit {
   constructor(private backendService: BackendService, private gameStatusService: GameStatusService) { }
 
   ngOnInit() {
-    let homeID = this.gameStatusService.game.teams[0].id;
-    let guestID = this.gameStatusService.game.teams[1].id;
-    this.backendService.getTeam(homeID).subscribe({
-      next: result => { 
-        this.home = result.body;
-        this.homeRoster = result.body.players;
-        console.dir(this.homeRoster);
-       }
-    });
-    this.backendService.getTeam(guestID).subscribe({
-      next: result => { 
-        this.guest = result.body;
-       }
-    });
+    this.home = this.gameStatusService.game.teams[0];
+    this.guest = this.gameStatusService.game.teams[1];
   }
 
   

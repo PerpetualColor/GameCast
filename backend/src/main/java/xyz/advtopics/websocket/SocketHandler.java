@@ -36,11 +36,11 @@ public class SocketHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         super.afterConnectionClosed(session, status);
         if (openSessions.containsValue(session)) {
-            System.out.println("Removing session: " + session.getId());
+            // System.out.println("Removing session: " + session.getId());
             openSessions.remove(session.getId());
         }
         if (sessionGames.containsKey(session.getId())) {
-            System.out.println("Removing game link session: " + session.getId());
+            // System.out.println("Removing game link session: " + session.getId());
             sessionGames.remove(session.getId());
         }
     }

@@ -3,10 +3,11 @@
   <div class="viewport-container">
     <cdk-virtual-scroll-viewport itemSize="40" class="event-viewport">
       <ng-container *cdkVirtualFor="let e of events" class="event">
-        <p><b>{{ e.dateTime | date:'h:mm:ss aa: ' }}</b> {{ e.data }}</p>
+        <p><b>{{ e.dateTime | date:'h:mm:ss aa: ' }}</b> {{ readableEvent(e) }}</p>
       </ng-container>
     </cdk-virtual-scroll-viewport>
   </div>
+  <span *ngIf="badEvent" class="warning">Invalid event!<br></span>
   <mat-form-field>
     <input matInput placeholder="Event information" (keydown.enter)="submitEvent()" [(ngModel)]="readyData" value="">
   </mat-form-field>

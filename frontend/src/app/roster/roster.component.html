@@ -1,18 +1,21 @@
-
 <div class="column">
-    <div class = "container" style='min-height:800px'>
+    <div class="container" style='min-height: min-content'>
         <h1>Roster</h1>
         <mat-tab-group dynamicHeight mat-stretch-tabs>
-            <mat-tab label = "Team 1"> 
+            <mat-tab label="Team 1">
                 <ul class="playerList">
-                    <li *ngFor="let player of home.players">{{ player.name }}</li>
+                    <div *ngIf="home">
+                        <li *ngFor="let player of home.players">{{ player.name }} <span class="right">{{ player.number }}</span></li>
+                    </div>
                 </ul>
-            </mat-tab>  
-            <mat-tab label = "Team 2">
+            </mat-tab>
+            <mat-tab label="Team 2">
                 <ul class="playerList">
-                    <li *ngFor="let player of guest.players">{{ player.name }}</li>
+                    <div *ngIf="guest">
+                    <li *ngFor="let player of guest.players">{{ player.name }} <span class="right">{{ player.number }}</span></li>
+                </div>
                 </ul>
-            </mat-tab> 
+            </mat-tab>
         </mat-tab-group>
     </div>
 </div>

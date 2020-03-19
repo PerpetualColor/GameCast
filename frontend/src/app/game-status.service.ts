@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { Game } from './model-objects/game';
 import { BackendService } from './backend.service';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
@@ -15,7 +15,7 @@ export class GameStatusService {
   public events$: Subject<Event>;
   public foul$: Subject<number[]>;
   private score: number[] = [0, 0];
-  private fouls: number[] = [0,0];
+  private fouls: number[] = [0, 0];
   private gameSocket: WebSocketSubject<any>;
 
   public game: Game;
@@ -27,11 +27,11 @@ export class GameStatusService {
     fouls[1] += 1;
   }
 
- 
+
 
   eventSubscriber() {
     const observers = [];
-    
+
     return (observer) => {
       observers.push(observer);
 
@@ -59,24 +59,24 @@ export class GameStatusService {
 
     //player scores amount x
     //syntax = PlayerNum,Team s Amount
-    var scoreMatch = new RegExp("([0-9]+[a-zA-Z]) (s) ([0-9]+)");
-    
+    var scoreMatch = new RegExp("([0-9]+[hg]) (s) ([0-9]+)");
+
     //player fouls
     //syntax = PlayerNum,Team f 
-    var foulMatch = new RegExp("([0-9]+[a-zA-Z]) (f)");
-    
+    var foulMatch = new RegExp("([0-9]+[hg]) (f)");
+
     //player rebounds
     //syntax = PlayerNum,Team r
-    var reboundMatch = new RegExp("([0-9]+[a-zA-Z]) (r)");
+    var reboundMatch = new RegExp("([0-9]+[hg]) (r)");
 
     //player makes free throw
     //syntax = PlayerNum,Team fT
-    var freeThrowMatch = new RegExp("([0-9]+[a-z]) (fT)");
+    var freeThrowMatch = new RegExp("([0-9]+[hg]) (fT)");
 
     let array;
 
     //if player scores
-    if((array = scoreMatch.exec(eventData))) {
+    if ((array = scoreMatch.exec(eventData))) {
       let pEvent = {
         type: "scores",
         amount: parseInt(array[3]),
@@ -87,7 +87,7 @@ export class GameStatusService {
     }
     //if player makes freeThrow
     //syntax: PlayerNum,Team fT
-    else if((array = freeThrowMatch.exec(eventData))){
+    else if ((array = freeThrowMatch.exec(eventData))) {
       let pEvent = {
         type: "free throw",
         amount: 1,
@@ -97,7 +97,7 @@ export class GameStatusService {
       return pEvent;
     }
     //if player fouls
-    else if((array = foulMatch.exec(eventData))){
+    else if ((array = foulMatch.exec(eventData))) {
       let pEvent = {
         type: "fouls",
         amount: null,
@@ -107,7 +107,7 @@ export class GameStatusService {
       return pEvent;
     }
     //if player rebounds
-    else if((array = reboundMatch.exec(eventData))){
+    else if ((array = reboundMatch.exec(eventData))) {
       let pEvent = {
         type: "rebounds",
         amount: null,
@@ -116,24 +116,68 @@ export class GameStatusService {
       }
       return pEvent;
     }
-    
-
-    else{
+    else {
       return null;
     }
   }
 
+  public receiveEvent(event: Event) {
+    let parsedEvent = this.parseEvent(event);
+    if (parsedEvent) {
+      let team = (parsedEvent.player.match("[hg]")[0] == "h" ? 0 : 1);
+      switch (parsedEvent.type) {
+        case "scores":
+          this.score[team] += parsedEvent.amount;
+          this.score$.next(this.score);
+          break;
+        case "free throw":
+          this.score[team] += 1;
+          this.score$.next(this.score);
+          break;
+        case "rebounds":
+          break;
+        case "fouls":
+          this.fouls[team] += 1;
+          this.foul$.next(this.fouls);
+          break;
+      };
+      console.dir(this.fouls);
+      console.dir(this.score);
+    }
+  }
+
   public selectGame(game: Game) {
+    this.score = [0, 0];
+    this.fouls = [0, 0];
+
     this.game = game;
+
+    for (let e of game.events) {
+      this.receiveEvent(e);
+    }
+
+    let homeID = game.teams[0].id;
+    let guestID = game.teams[1].id;
+    this.backendService.getTeam(homeID).subscribe({
+      next: result => { 
+        this.game.teams[0] = result.body;
+       }
+    });
+    this.backendService.getTeam(guestID).subscribe({
+      next: result => { 
+        this.game.teams[1] = result.body;
+       }
+    });
+
     if (!this.gameSocket) {
       this.gameSocket = webSocket({
         url: "ws://localhost:8080/webSocket"
       });
     }
     this.gameSocket.asObservable().subscribe(
-      msg => { 
-        console.dir(msg);
+      msg => {
         this.events$.next(msg as Event);
+        this.receiveEvent(msg as Event);
       }
     );
     this.gameSocket.next(game.id);
@@ -141,13 +185,13 @@ export class GameStatusService {
 
 
   constructor(private backendService: BackendService) {
-    this.score$ = new Subject();
-    this.foul$ = new Subject();
-    setInterval(() => {
-      this.incScore(this.score, this.fouls);
-      this.score$.next(this.score);
-      this.foul$.next(this.fouls);
-    }, 1000);
+    this.score$ = new BehaviorSubject(this.score);
+    this.foul$ = new BehaviorSubject(this.fouls);
+    // setInterval(() => {
+    //   this.incScore(this.score, this.fouls);
+    //   this.score$.next(this.score);
+    //   this.foul$.next(this.fouls);
+    // }, 1000);
 
     this.events$ = new Subject();
   }

@@ -21,6 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ChatBoxComponent } from './chat-box/chat-box.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     GameScoreBoardComponent,
     RosterComponent,
     EventConsoleComponent,
-    CreateGameComponent
+    CreateGameComponent,
+    ChatBoxComponent
   ],
   imports: [
     BrowserModule,

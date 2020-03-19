@@ -37,6 +37,6 @@ export class GameScoreBoardComponent implements OnInit {
       complete: () => {
         console.log("subscribe complete");
       }
-    })
+    });
   }
 }
