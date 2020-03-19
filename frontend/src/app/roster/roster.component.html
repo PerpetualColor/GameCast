@@ -5,14 +5,14 @@
             <mat-tab label="Team 1">
                 <ul class="playerList">
                     <div *ngIf="home">
-                        <li *ngFor="let player of home.players">{{ player.name }} <span class="right">{{ player.number }}</span></li>
+                        <li *ngFor="let player of home.players">{{ player.number }} {{ player.name }}</li>
                     </div>
                 </ul>
             </mat-tab>
             <mat-tab label="Team 2">
                 <ul class="playerList">
                     <div *ngIf="guest">
-                    <li *ngFor="let player of guest.players">{{ player.name }} <span class="right">{{ player.number }}</span></li>
+                    <li *ngFor="let player of guest.players">{{ player.number }} {{ player.name }}</li>
                 </div>
                 </ul>
             </mat-tab>

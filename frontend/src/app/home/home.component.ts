@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   }
 
   getHelloMessage() {
-    console.dir(this.gameStatusService.parseEvent({id: -1, dateTime: new Date(), data: "14h f"}));
+    this.gameStatusService.getPlayer("14h");
   }
 
   setGameAndRedirect(game: Game) {

@@ -5,6 +5,7 @@ import { BackendService } from './backend.service';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { Event } from './model-objects/event';
 import { ParseEvent } from './model-objects/parseEvent';
+import { Player } from './model-objects/player';
 
 @Injectable({
   providedIn: 'root'
@@ -121,14 +122,25 @@ export class GameStatusService {
     }
   }
 
+  public getPlayer(id: string): Player {
+    let team = (id.match("[hg]")[0] == "h" ? 0 : 1);
+    let number = parseInt((id.match("([0-9]+)[hg]")[1]));
+    return this.game.teams[team].players.find(p => p.number == number);
+  }
+
   public receiveEvent(event: Event) {
     let parsedEvent = this.parseEvent(event);
     if (parsedEvent) {
+
       let team = (parsedEvent.player.match("[hg]")[0] == "h" ? 0 : 1);
+
       switch (parsedEvent.type) {
         case "scores":
           this.score[team] += parsedEvent.amount;
           this.score$.next(this.score);
+          // if (this.getPlayer(parsedEvent.player) != null) {
+          //   this.getPlayer(parsedEvent.player).playerStats.score += parsedEvent.amount;
+          // }
           break;
         case "free throw":
           this.score[team] += 1;
@@ -141,8 +153,6 @@ export class GameStatusService {
           this.foul$.next(this.fouls);
           break;
       };
-      console.dir(this.fouls);
-      console.dir(this.score);
     }
   }
 
