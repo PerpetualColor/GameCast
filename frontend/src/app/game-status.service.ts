@@ -138,19 +138,25 @@ export class GameStatusService {
         case "scores":
           this.score[team] += parsedEvent.amount;
           this.score$.next(this.score);
-          // if (this.getPlayer(parsedEvent.player) != null) {
-          //   this.getPlayer(parsedEvent.player).playerStats.score += parsedEvent.amount;
-          // }
+          if (this.getPlayer(parsedEvent.player) != null) {
+             this.getPlayer(parsedEvent.player).stats.scores.push(parsedEvent.amount);
+          }
           break;
         case "free throw":
           this.score[team] += 1;
           this.score$.next(this.score);
           break;
         case "rebounds":
+          if (this.getPlayer(parsedEvent.player) != null) {
+            this.getPlayer(parsedEvent.player).stats.rebounds += parsedEvent.amount;
+          }
           break;
         case "fouls":
           this.fouls[team] += 1;
           this.foul$.next(this.fouls);
+          if (this.getPlayer(parsedEvent.player) != null) {
+              this.getPlayer(parsedEvent.player).stats.fouls += parsedEvent.amount;
+          }
           break;
       };
     }
