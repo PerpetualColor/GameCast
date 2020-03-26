@@ -6,6 +6,7 @@ import { Team } from './model-objects/team';
 import { Game } from './model-objects/game';
 import { GameDto } from './model-objects/gameDto';
 import { environment } from 'src/environments/environment';
+import { Player } from './model-objects/player';
 
 const baseUrl = 'http://localhost:8080';
 
@@ -47,8 +48,8 @@ export class BackendService {
     );
   }
 
-  createTeam(): Observable<HttpResponse<string>> {
-    return this.http.post(`${baseUrl}/createTeam`, { name: "Dave", players: []}, {
+  createTeam(name: string): Observable<HttpResponse<string>> {
+    return this.http.post(`${baseUrl}/createTeam`, { name: name, players: []}, {
       withCredentials: false,
       observe: 'response',
       responseType: 'text'
@@ -56,8 +57,6 @@ export class BackendService {
       catchError(error => this.handleError(error))
     );
   }
-
-  
 
   private handleError(error: HttpErrorResponse) {
     console.error("Error: ", error.error.message);
@@ -90,6 +89,19 @@ export class BackendService {
     return this.http.get<Game[]>(`${baseUrl}/getAllGames`, {
       withCredentials: false,
       observe: 'response'
+    }).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+  
+  updateRoster(roster: Player[], teamId: number): Observable<HttpResponse<string>> {
+    return this.http.post(`${baseUrl}/updateRoster`, roster, {
+      withCredentials: false,
+      observe: 'response',
+      responseType: 'text',
+      params: {
+        teamId: teamId.toString(),
+      }
     }).pipe(
       catchError(error => this.handleError(error))
     );

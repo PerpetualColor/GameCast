@@ -4,6 +4,9 @@ import { BackendService } from '../backend.service';
 import { Game } from '../model-objects/game';
 import { Time } from '@angular/common';
 import { GameDto } from '../model-objects/gameDto';
+import { MatDialog } from '@angular/material/dialog';
+import { NewTeamComponent } from './new-team/new-team.component';
+import { GameStatusService } from '../game-status.service';
 
 @Component({
   selector: 'app-create-game',
@@ -12,7 +15,7 @@ import { GameDto } from '../model-objects/gameDto';
 })
 export class CreateGameComponent implements OnInit {
 
-  constructor(private backendService: BackendService) { }
+  constructor(private backendService: BackendService, private gameStatusService: GameStatusService, public newTeamDialog: MatDialog) { }
 
   teams: Team[];
   homeTeams: Team[];
@@ -49,6 +52,21 @@ export class CreateGameComponent implements OnInit {
   }
 
   filterTeams() {
+    if (this.homeTeamSelect == -1 || this.guestTeamSelect == -1) {
+      let dialogRef = this.newTeamDialog.open(NewTeamComponent, {
+        height: '400px',
+        width: '600px',
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        this.ngOnInit();
+        if (this.homeTeamSelect == -1) {
+          this.homeTeamSelect = result;
+        } else {
+          this.guestTeamSelect = result;
+        }
+      });
+    }
     if (this.homeTeamSelect) {
       this.guestTeams = this.teams.filter(t => t.id != this.homeTeamSelect);
     }
@@ -56,5 +74,4 @@ export class CreateGameComponent implements OnInit {
       this.homeTeams = this.teams.filter(t => t.id != this.guestTeamSelect);
     }
   }
-
 }

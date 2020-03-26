@@ -15,11 +15,17 @@ export class GameScoreBoardComponent implements OnInit {
   scoreChangeDetector: ChangeDetectorRef;
   fouls: number[];
 
+  homeName: string;
+  guestName: string;
+
   constructor(private gameStatusService: GameStatusService) { }
   ngOnInit() {
 
     this.score = [0, 0];
     this.fouls = [0, 0];
+
+    this.homeName = this.gameStatusService.game.teams[0].name;
+    this.guestName = this.gameStatusService.game.teams[1].name;
 
     this.gameStatusService.score$.subscribe({
       next: val => {

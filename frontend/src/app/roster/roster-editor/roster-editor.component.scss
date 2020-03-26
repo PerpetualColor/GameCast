@@ -1,0 +1,13 @@
+.playerInput {
+    display: grid;
+    grid-template-columns: 30% 10%;
+    gap: 1%;
+}
+
+.nameInput {
+    grid-column: 1;
+}
+
+.numberInput {
+    grid-column: 2;
+}

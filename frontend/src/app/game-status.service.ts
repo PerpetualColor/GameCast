@@ -193,6 +193,19 @@ export class GameStatusService {
     this.gameSocket.next(game.id);
   }
 
+  public updateTeam() {
+    this.backendService.getTeam(this.game.teams[0].id).subscribe({
+      next: result => {
+        this.game.teams[0] = result.body;
+      }
+    });
+    this.backendService.getTeam(this.game.teams[1].id).subscribe({
+      next: result => {
+        this.game.teams[1] = result.body;
+      }
+    });
+  }
+
 
   constructor(private backendService: BackendService) {
     this.score$ = new BehaviorSubject(this.score);

@@ -17,6 +17,7 @@ $height: 7em;
     grid-template-columns: min-content min-content auto;
     height: 100%;
     text-align: left;
+    white-space: nowrap;
 }
 
 .score-right {

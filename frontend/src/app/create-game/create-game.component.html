@@ -12,6 +12,9 @@
     <br>
     <mat-form-field class="gameDatepicker">
         <mat-select placeholder="Choose home team" (selectionChange)="filterTeams()" [(ngModel)]="homeTeamSelect">
+            <mat-option [value]="-1">
+                <b>New Team</b>
+            </mat-option>
             <mat-option *ngFor="let team of homeTeams" [value]="team.id">
                 {{ team.name }}
             </mat-option>
@@ -19,6 +22,9 @@
     </mat-form-field>
     <mat-form-field>
         <mat-select placeholder="Choose guest team" (selectionChange)="filterTeams()" [(ngModel)]="guestTeamSelect">
+            <mat-option [value]="-1">
+                <b>New Team</b>
+            </mat-option>
             <mat-option *ngFor="let team of guestTeams" [value]="team.id">
                 {{ team.name }}
             </mat-option>
