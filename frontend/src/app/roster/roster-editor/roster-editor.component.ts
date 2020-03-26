@@ -48,7 +48,7 @@ export class RosterEditorComponent implements OnInit {
     }
     for (var i = this.team.players.length; i < this.playerNames.length-1; i++) {
       if (this.playerNames[i] && this.playerNumbers[i]) {
-        this.team.players.push({ id: -1, name: this.playerNames[i], number: this.playerNumbers[i]});
+        this.team.players.push({ id: -1, name: this.playerNames[i], number: this.playerNumbers[i], stats: null});
       }
     }
 

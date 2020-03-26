@@ -134,12 +134,17 @@ export class GameStatusService {
 
       let team = (parsedEvent.player.match("[hg]")[0] == "h" ? 0 : 1);
 
+      if (this.getPlayer(parsedEvent.player)) {
+        if (!this.getPlayer(parsedEvent.player).stats) {
+          this.getPlayer(parsedEvent.player).stats = { scores: [], fouls: 0, rebounds: 0 };
+        }
+      }
       switch (parsedEvent.type) {
         case "scores":
           this.score[team] += parsedEvent.amount;
           this.score$.next(this.score);
           if (this.getPlayer(parsedEvent.player) != null) {
-             this.getPlayer(parsedEvent.player).stats.scores.push(parsedEvent.amount);
+            this.getPlayer(parsedEvent.player).stats.scores.push(parsedEvent.amount);
           }
           break;
         case "free throw":
@@ -155,7 +160,7 @@ export class GameStatusService {
           this.fouls[team] += 1;
           this.foul$.next(this.fouls);
           if (this.getPlayer(parsedEvent.player) != null) {
-              this.getPlayer(parsedEvent.player).stats.fouls += parsedEvent.amount;
+            this.getPlayer(parsedEvent.player).stats.fouls += parsedEvent.amount;
           }
           break;
       };
@@ -175,14 +180,14 @@ export class GameStatusService {
     let homeID = game.teams[0].id;
     let guestID = game.teams[1].id;
     this.backendService.getTeam(homeID).subscribe({
-      next: result => { 
+      next: result => {
         this.game.teams[0] = result.body;
-       }
+      }
     });
     this.backendService.getTeam(guestID).subscribe({
-      next: result => { 
+      next: result => {
         this.game.teams[1] = result.body;
-       }
+      }
     });
 
     if (!this.gameSocket) {
