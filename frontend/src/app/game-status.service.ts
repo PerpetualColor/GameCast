@@ -191,9 +191,7 @@ export class GameStatusService {
     });
 
     if (!this.gameSocket) {
-      this.gameSocket = webSocket({
-        url: "ws://localhost:8080/webSocket"
-      });
+      this.gameSocket = this.backendService.openWebSocket();
     }
     this.gameSocket.asObservable().subscribe(
       msg => {
