@@ -8,6 +8,9 @@
         </div>
         <h1 class="score-value">{{ score[0] }}</h1>
     </div>
+    <div class="period" *ngIf="this.period">
+        <h3>Period {{ period }}</h3>
+    </div>
     <div class="score-right">
         <h1 class="score-value">{{ score[1] }}</h1>
         <div>

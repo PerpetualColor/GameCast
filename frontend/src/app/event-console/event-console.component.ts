@@ -46,16 +46,20 @@ export class EventConsoleComponent implements OnInit {
     let parsedEvent: ParseEvent;
     if ((parsedEvent = this.gameStatusService.parseEvent(event))) {
       var playerMatch = new RegExp("([0-9]+)([hg])");
-      let m = playerMatch.exec(parsedEvent.player);
-      if (m[2] == "h") {
-        output += "Home ";
-      } else {
-        output += "Guest ";
-      }
-      output += m[1];
-      let playerNameSearch = this.gameStatusService.game.teams[(m[2] == "h" ? 0 : 1)].players.filter(p => p.number == parseInt(m[1]));
-      if (playerNameSearch.length > 0) {
-        output += " (" + playerNameSearch[0].name + ") ";
+
+      let m;
+      if (parsedEvent.player) {
+        m = playerMatch.exec(parsedEvent.player);
+        if (m[2] == "h") {
+          output += "Home ";
+        } else {
+          output += "Guest ";
+        }
+        output += m[1];
+        let playerNameSearch = this.gameStatusService.game.teams[(m[2] == "h" ? 0 : 1)].players.filter(p => p.number == parseInt(m[1]));
+        if (playerNameSearch.length > 0) {
+          output += " (" + playerNameSearch[0].name + ") ";
+        }
       }
       switch (parsedEvent.type) {
         case "scores":
@@ -69,6 +73,15 @@ export class EventConsoleComponent implements OnInit {
           break;
         case "rebounds":
           output += " gets the rebound!";
+          break;
+        case "start game":
+          output += "The game begins!"
+          break;
+        case "period":
+          output += "Now in period " + parsedEvent.amount;
+          break;
+        case "next period":
+          output += "End of period"
           break;
       }
     } else {

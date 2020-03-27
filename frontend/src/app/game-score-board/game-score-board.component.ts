@@ -14,6 +14,7 @@ export class GameScoreBoardComponent implements OnInit {
   score: number[];
   scoreChangeDetector: ChangeDetectorRef;
   fouls: number[];
+  period: number;
 
   homeName: string;
   guestName: string;
@@ -44,5 +45,14 @@ export class GameScoreBoardComponent implements OnInit {
         console.log("subscribe complete");
       }
     });
+
+    this.gameStatusService.period$.subscribe({
+      next: val => {
+        this.period = val;
+      },
+      complete: () => {
+        console.log("subscribe complete");
+      }
+    })
   }
 }
