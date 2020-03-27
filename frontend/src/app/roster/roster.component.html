@@ -3,21 +3,49 @@
         <h1>Roster</h1>
         <mat-tab-group dynamicHeight mat-stretch-tabs>
             <mat-tab label="{{ home.name }}">
-                <!-- <ul class="playerList">
-                    <div *ngIf="home">
-                        <li *ngFor="let player of home.players">{{ player.number }} {{ player.name }}</li>
-                    </div>
-                </ul> -->
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <ng-container matColumnDef="score">
+                        <th mat-header-cell *matHeaderCellDef> score </th>
+                        <td mat-cell *matCellDef="let playerstats"> {{playerstats.score}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="fouls">
+                        <th mat-header-cell *matHeaderCellDef> fouls </th>
+                        <td mat-cell *matCellDef="let playerstats"> {{playerstats.fouls}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="rebounds">
+                        <th mat-header-cell *matHeaderCellDef> rebounds </th>
+                        <td mat-cell *matCellDef="let playerstats"> {{playerstats.rebounds}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
                 <div class="edit-button">
                     <button mat-raised-button (click)="openEditorDialog(home)">Edit</button>
                 </div>
             </mat-tab>
             <mat-tab label="{{ guest.name }}">
-                <!-- <ul class="playerList">
-                    <div *ngIf="guest">
-                    <li *ngFor="let player of guest.players">{{ player.number }} {{ player.name }}</li>
-                </div>
-                </ul> -->
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <ng-container matColumnDef="score">
+                        <th mat-header-cell *matHeaderCellDef> score </th>
+                        <td mat-cell *matCellDef="let playerstats"> {{playerstats.score}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="fouls">
+                        <th mat-header-cell *matHeaderCellDef> fouls </th>
+                        <td mat-cell *matCellDef="let playerstats"> {{playerstats.fouls}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="rebounds">
+                        <th mat-header-cell *matHeaderCellDef> rebounds </th>
+                        <td mat-cell *matCellDef="let playerstats"> {{playerstats.rebounds}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
                 <div class="edit-button">
                     <button mat-raised-button (click)="openEditorDialog(guest)">Edit</button>
                 </div>
