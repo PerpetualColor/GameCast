@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 import { Player } from './model-objects/player';
 import { webSocket } from 'rxjs/webSocket';
 
-const baseUrl = (environment.production ? 'http://www.advtopics.xyz:8080' : 'http://localhost:8080');
+const baseUrl = (environment.production ? 'http://ec2-18-144-88-105.us-west-1.compute.amazonaws.com:8080' : 'http://localhost:8080');
 
 @Injectable({
   providedIn: 'root'
@@ -125,7 +125,7 @@ export class BackendService {
 
   openWebSocket() {
     return webSocket({
-      url: "ws://localhost:8080/webSocket"
+      url: `ws${baseUrl.split("http")[1]}/webSocket`
     });
   }
   
