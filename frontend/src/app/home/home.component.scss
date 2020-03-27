@@ -1,0 +1,15 @@
+.allGames {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1em;
+    margin: 1em;
+}
+
+.gameSelect {
+    width: min-content;
+}
+
+.header {
+    text-align: center;
+}

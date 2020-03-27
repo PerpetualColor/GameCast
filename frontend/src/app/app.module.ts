@@ -22,6 +22,10 @@ import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ChatBoxComponent } from './chat-box/chat-box.component';
+import { RosterEditorComponent } from './roster/roster-editor/roster-editor.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { NewTeamComponent } from './create-game/new-team/new-team.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,9 @@ import { ChatBoxComponent } from './chat-box/chat-box.component';
     RosterComponent,
     EventConsoleComponent,
     CreateGameComponent,
-    ChatBoxComponent
+    ChatBoxComponent,
+    RosterEditorComponent,
+    NewTeamComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +55,8 @@ import { ChatBoxComponent } from './chat-box/chat-box.component';
     FormsModule,
     MatTabsModule,
     MatNativeDateModule,
+    MatTableModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

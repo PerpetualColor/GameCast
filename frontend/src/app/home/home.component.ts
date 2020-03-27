@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
     this.backendService.getAllGames().subscribe({
       next: result => {
         this.games = result.body;
+        console.dir(this.games);
       }
     });
   }

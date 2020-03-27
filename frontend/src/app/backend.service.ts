@@ -6,8 +6,10 @@ import { Team } from './model-objects/team';
 import { Game } from './model-objects/game';
 import { GameDto } from './model-objects/gameDto';
 import { environment } from 'src/environments/environment';
+import { Player } from './model-objects/player';
+import { webSocket } from 'rxjs/webSocket';
 
-const baseUrl = 'http://localhost:8080';
+const baseUrl = (environment.production ? 'http://www.advtopics.xyz:8080' : 'http://localhost:8080');
 
 @Injectable({
   providedIn: 'root'
@@ -47,8 +49,8 @@ export class BackendService {
     );
   }
 
-  createTeam(): Observable<HttpResponse<string>> {
-    return this.http.post(`${baseUrl}/createTeam`, { name: "Dave", players: []}, {
+  createTeam(name: string): Observable<HttpResponse<string>> {
+    return this.http.post(`${baseUrl}/createTeam`, { name: name, players: []}, {
       withCredentials: false,
       observe: 'response',
       responseType: 'text'
@@ -56,8 +58,6 @@ export class BackendService {
       catchError(error => this.handleError(error))
     );
   }
-
-  
 
   private handleError(error: HttpErrorResponse) {
     console.error("Error: ", error.error.message);
@@ -94,6 +94,19 @@ export class BackendService {
       catchError(error => this.handleError(error))
     );
   }
+  
+  updateRoster(roster: Player[], teamId: number): Observable<HttpResponse<string>> {
+    return this.http.post(`${baseUrl}/updateRoster`, roster, {
+      withCredentials: false,
+      observe: 'response',
+      responseType: 'text',
+      params: {
+        teamId: teamId.toString(),
+      }
+    }).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
 
   createAndAddEvent(eventData: string, eventDate: number, gameId: number): Observable<HttpResponse<String>> {
     return this.http.post(`${baseUrl}/createAndAddEvent`, {}, {
@@ -108,6 +121,12 @@ export class BackendService {
     }).pipe(
       catchError(error => this.handleError(error))
     );
+  }
+
+  openWebSocket() {
+    return webSocket({
+      url: "ws://localhost:8080/webSocket"
+    });
   }
   
 }

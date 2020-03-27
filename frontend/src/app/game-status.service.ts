@@ -15,8 +15,11 @@ export class GameStatusService {
   public score$: Subject<number[]>;
   public events$: Subject<Event>;
   public foul$: Subject<number[]>;
+  public period$: Subject<number>;
+
   private score: number[] = [0, 0];
   private fouls: number[] = [0, 0];
+  private period: number;
   private gameSocket: WebSocketSubject<any>;
 
   public game: Game;
@@ -60,19 +63,31 @@ export class GameStatusService {
 
     //player scores amount x
     //syntax = PlayerNum,Team s Amount
-    var scoreMatch = new RegExp("([0-9]+[hg]) (s) ([0-9]+)");
+    var scoreMatch = new RegExp("^([0-9]+[hg]) (s) ([0-9]+)$");
 
     //player fouls
     //syntax = PlayerNum,Team f 
-    var foulMatch = new RegExp("([0-9]+[hg]) (f)");
+    var foulMatch = new RegExp("^([0-9]+[hg]) (f)$");
 
     //player rebounds
     //syntax = PlayerNum,Team r
-    var reboundMatch = new RegExp("([0-9]+[hg]) (r)");
+    var reboundMatch = new RegExp("^([0-9]+[hg]) (r)$");
 
     //player makes free throw
     //syntax = PlayerNum,Team fT
-    var freeThrowMatch = new RegExp("([0-9]+[hg]) (fT)");
+    var freeThrowMatch = new RegExp("^([0-9]+[hg]) (fT)$");
+
+    // start of the game
+    // syntax: sg
+    var startGameMatch = new RegExp("^sg$");
+
+    // choose the period of the game
+    // syntax: p,Num
+    var periodMatch = new RegExp("^p([0-9]+)$");
+
+    // continue to the next period
+    // syntax: np
+    var nextPeriodMatch = new RegExp("^np$");
 
     let array;
 
@@ -117,6 +132,36 @@ export class GameStatusService {
       }
       return pEvent;
     }
+    // start of the game
+    else if ((array = startGameMatch.exec(eventData))) {
+      let pEvent = {
+        type: "start game",
+        amount: null,
+        player: null,
+        origEvent: eventData
+      }
+      return pEvent;
+    }
+    // choose period
+    else if ((array = periodMatch.exec(eventData))) {
+      let pEvent = {
+        type: "period",
+        amount: parseInt(array[1]),
+        player: null,
+        origEvent: eventData
+      }
+      return pEvent;
+    }
+    // next period
+    else if ((array = nextPeriodMatch.exec(eventData))) {
+      let pEvent = {
+        type: "next period",
+        amount: null,
+        player: null,
+        origEvent: eventData
+      }
+      return pEvent;
+    }
     else {
       return null;
     }
@@ -131,15 +176,21 @@ export class GameStatusService {
   public receiveEvent(event: Event) {
     let parsedEvent = this.parseEvent(event);
     if (parsedEvent) {
-
-      let team = (parsedEvent.player.match("[hg]")[0] == "h" ? 0 : 1);
-
+      let team;
+      if (parsedEvent.player) {
+        team = (parsedEvent.player.match("[hg]")[0] == "h" ? 0 : 1);
+        if (this.getPlayer(parsedEvent.player)) {
+          if (!this.getPlayer(parsedEvent.player).stats) {
+            this.getPlayer(parsedEvent.player).stats = { scores: [], fouls: 0, rebounds: 0 };
+          }
+        }
+      }
       switch (parsedEvent.type) {
         case "scores":
           this.score[team] += parsedEvent.amount;
           this.score$.next(this.score);
           if (this.getPlayer(parsedEvent.player) != null) {
-             this.getPlayer(parsedEvent.player).stats.scores.push(parsedEvent.amount);
+            this.getPlayer(parsedEvent.player).stats.scores.push(parsedEvent.amount);
           }
           break;
         case "free throw":
@@ -155,7 +206,21 @@ export class GameStatusService {
           this.fouls[team] += 1;
           this.foul$.next(this.fouls);
           if (this.getPlayer(parsedEvent.player) != null) {
-              this.getPlayer(parsedEvent.player).stats.fouls += parsedEvent.amount;
+            this.getPlayer(parsedEvent.player).stats.fouls += parsedEvent.amount;
+          }
+          break;
+        case "start game":
+          this.period = 1;
+          this.period$.next(this.period);
+          break;
+        case "period":
+          this.period = parsedEvent.amount;
+          this.period$.next(this.period);
+          break;
+        case "next period":
+          if (this.period) {
+            this.period += 1;
+            this.period$.next(this.period);
           }
           break;
       };
@@ -175,20 +240,18 @@ export class GameStatusService {
     let homeID = game.teams[0].id;
     let guestID = game.teams[1].id;
     this.backendService.getTeam(homeID).subscribe({
-      next: result => { 
+      next: result => {
         this.game.teams[0] = result.body;
-       }
+      }
     });
     this.backendService.getTeam(guestID).subscribe({
-      next: result => { 
+      next: result => {
         this.game.teams[1] = result.body;
-       }
+      }
     });
 
     if (!this.gameSocket) {
-      this.gameSocket = webSocket({
-        url: "ws://localhost:8080/webSocket"
-      });
+      this.gameSocket = this.backendService.openWebSocket();
     }
     this.gameSocket.asObservable().subscribe(
       msg => {
@@ -199,15 +262,24 @@ export class GameStatusService {
     this.gameSocket.next(game.id);
   }
 
+  public updateTeam() {
+    this.backendService.getTeam(this.game.teams[0].id).subscribe({
+      next: result => {
+        this.game.teams[0] = result.body;
+      }
+    });
+    this.backendService.getTeam(this.game.teams[1].id).subscribe({
+      next: result => {
+        this.game.teams[1] = result.body;
+      }
+    });
+  }
+
 
   constructor(private backendService: BackendService) {
     this.score$ = new BehaviorSubject(this.score);
     this.foul$ = new BehaviorSubject(this.fouls);
-    // setInterval(() => {
-    //   this.incScore(this.score, this.fouls);
-    //   this.score$.next(this.score);
-    //   this.foul$.next(this.fouls);
-    // }, 1000);
+    this.period$ = new BehaviorSubject(this.period);
 
     this.events$ = new Subject();
   }

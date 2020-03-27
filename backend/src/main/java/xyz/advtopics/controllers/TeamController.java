@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import xyz.advtopics.objects.Player;
 import xyz.advtopics.objects.Team;
 import xyz.advtopics.objects.DTOs.TeamDTO;
 import xyz.advtopics.services.TeamService;
@@ -23,8 +24,8 @@ public class TeamController {
 
     @PostMapping("/createTeam")
     public ResponseEntity<String> createTeam(@RequestBody TeamDTO teamdto) {
-        teamService.createTeam(teamdto);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Accepted");
+        long id = teamService.createTeam(teamdto).getId();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(Long.toString(id));
     }
 
     @GetMapping("/getTeam")
@@ -40,6 +41,12 @@ public class TeamController {
     @PostMapping("/createAndAddPlayer")
     public ResponseEntity<String> createAndAddPlayer(@RequestParam String name, @RequestParam int number, @RequestParam long teamId) {
         teamService.createAndAddPlayer(name, number, teamId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Success");
+    }
+
+    @PostMapping("/updateRoster")
+    public ResponseEntity<String> updateRoster(@RequestBody Player[] roster, @RequestParam long teamId) {
+        teamService.updateRoster(roster, teamId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Success");
     }
 

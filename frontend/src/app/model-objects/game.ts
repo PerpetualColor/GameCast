@@ -3,7 +3,7 @@ import { Event } from './event';
 
 export class Game {
     id: number;
-    dateTime: Date;
+    dateTime: Date | number;
     teams: Team[];
     events: Event[];
 }

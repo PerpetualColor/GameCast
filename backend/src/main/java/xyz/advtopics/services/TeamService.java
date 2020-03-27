@@ -22,7 +22,7 @@ public class TeamService {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void createTeam(TeamDTO teamdto) {
+    public Team createTeam(TeamDTO teamdto) {
         Session session = sessionFactory.openSession();
         Team t = new Team();
         t.setPlayers(new ArrayList<Player>());
@@ -32,6 +32,7 @@ public class TeamService {
         session.persist(t);
         session.getTransaction().commit();
         session.close();
+        return t;
     }
 
     public Team getTeam(@RequestParam long teamID) {
@@ -61,6 +62,29 @@ public class TeamService {
 
         session.beginTransaction();
         session.persist(p);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void updateRoster(Player[] roster, long teamId) {
+        Session session = sessionFactory.openSession();
+        Team t = session.get(Team.class, teamId);
+        session.beginTransaction();
+        for (Player p : roster) {
+            if (p.getId() >= 0) {
+                Player old = session.get(Player.class, p.getId());
+                if (!old.getName().equals(p.getName()) || old.getNumber() != p.getNumber()) {
+                    old.setName(p.getName());
+                    old.setNumber(p.getNumber());
+                    session.update(old);
+                }
+            } else {
+                Player newPlayer = new Player(p.getNumber(), p.getName());
+                newPlayer.setTeam(t);
+                session.persist(newPlayer);
+            }
+        }
+
         session.getTransaction().commit();
         session.close();
     }

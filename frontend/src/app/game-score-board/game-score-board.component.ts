@@ -14,12 +14,19 @@ export class GameScoreBoardComponent implements OnInit {
   score: number[];
   scoreChangeDetector: ChangeDetectorRef;
   fouls: number[];
+  period: number;
+
+  homeName: string;
+  guestName: string;
 
   constructor(private gameStatusService: GameStatusService) { }
   ngOnInit() {
 
     this.score = [0, 0];
     this.fouls = [0, 0];
+
+    this.homeName = this.gameStatusService.game.teams[0].name;
+    this.guestName = this.gameStatusService.game.teams[1].name;
 
     this.gameStatusService.score$.subscribe({
       next: val => {
@@ -38,5 +45,14 @@ export class GameScoreBoardComponent implements OnInit {
         console.log("subscribe complete");
       }
     });
+
+    this.gameStatusService.period$.subscribe({
+      next: val => {
+        this.period = val;
+      },
+      complete: () => {
+        console.log("subscribe complete");
+      }
+    })
   }
 }

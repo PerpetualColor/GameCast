@@ -4,6 +4,10 @@ import { BackendService } from '../backend.service';
 import { Game } from '../model-objects/game';
 import { Time } from '@angular/common';
 import { GameDto } from '../model-objects/gameDto';
+import { MatDialog } from '@angular/material/dialog';
+import { NewTeamComponent } from './new-team/new-team.component';
+import { GameStatusService } from '../game-status.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-game',
@@ -12,7 +16,7 @@ import { GameDto } from '../model-objects/gameDto';
 })
 export class CreateGameComponent implements OnInit {
 
-  constructor(private backendService: BackendService) { }
+  constructor(private backendService: BackendService, private gameStatusService: GameStatusService, public newTeamDialog: MatDialog, private router: Router) { }
 
   teams: Team[];
   homeTeams: Team[];
@@ -35,8 +39,8 @@ export class CreateGameComponent implements OnInit {
   }
 
   createGame() {
-    this.dateSelect.setHours(this.timeSelect.hours);
-    this.dateSelect.setMinutes(this.timeSelect.minutes);
+    this.dateSelect.setHours(parseInt(this.timeSelect.toString().split(":")[0]));
+    this.dateSelect.setMinutes(parseInt(this.timeSelect.toString().split(":")[1]));
 
     let game: GameDto = {
       dateTime: this.dateSelect.getTime(),
@@ -44,11 +48,28 @@ export class CreateGameComponent implements OnInit {
     }
 
     this.backendService.createGame(game).subscribe({
-      next: result => { console.log(result); }
+      next: result => { 
+        this.router.navigate(['/home']);
+       }
     })
   }
 
   filterTeams() {
+    if (this.homeTeamSelect == -1 || this.guestTeamSelect == -1) {
+      let dialogRef = this.newTeamDialog.open(NewTeamComponent, {
+        height: '400px',
+        width: '600px',
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        this.ngOnInit();
+        if (this.homeTeamSelect == -1) {
+          this.homeTeamSelect = result;
+        } else {
+          this.guestTeamSelect = result;
+        }
+      });
+    }
     if (this.homeTeamSelect) {
       this.guestTeams = this.teams.filter(t => t.id != this.homeTeamSelect);
     }
@@ -56,5 +77,4 @@ export class CreateGameComponent implements OnInit {
       this.homeTeams = this.teams.filter(t => t.id != this.guestTeamSelect);
     }
   }
-
 }
