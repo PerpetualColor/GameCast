@@ -31,6 +31,7 @@ public class GameController {
     @PostMapping("/createGame")
     public ResponseEntity<String> createGame(@RequestBody GameDTO game) {
         gameService.createGame(game);
+
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Created");               
     }
 

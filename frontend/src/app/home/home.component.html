@@ -1,8 +1,15 @@
-<button mat-raised-button (click)="getHelloMessage()">Hello?</button>
-<a routerLink="/newgame">Create a game</a>
 <div class="allGames">
     <div class="gameSelect" *ngFor="let game of games">
-        <br>
-        <button mat-raised-button color="primary" (click)="setGameAndRedirect(game)">{{ game.teams[0].name }} vs {{ game.teams[1].name }}</button>
+        <mat-card class="mat-elevation-z8">
+            <div class="header">
+                <h1 style="white-space: nowrap;">{{ game.dateTime | date:'MMMM d, y' }}</h1>
+                <h2>{{ game.dateTime | date:'h:mm a' }}</h2>
+                <h2>{{ game.teams[0].name }}</h2>
+                <h3>vs</h3>
+                <h2>{{ game.teams[1].name }}</h2>
+                <br>
+                <button mat-raised-button color="primary" (click)="setGameAndRedirect(game)">Watch this Game</button>
+            </div>
+        </mat-card>
     </div>
 </div>

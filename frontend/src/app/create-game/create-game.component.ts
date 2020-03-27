@@ -7,6 +7,7 @@ import { GameDto } from '../model-objects/gameDto';
 import { MatDialog } from '@angular/material/dialog';
 import { NewTeamComponent } from './new-team/new-team.component';
 import { GameStatusService } from '../game-status.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-game',
@@ -15,7 +16,7 @@ import { GameStatusService } from '../game-status.service';
 })
 export class CreateGameComponent implements OnInit {
 
-  constructor(private backendService: BackendService, private gameStatusService: GameStatusService, public newTeamDialog: MatDialog) { }
+  constructor(private backendService: BackendService, private gameStatusService: GameStatusService, public newTeamDialog: MatDialog, private router: Router) { }
 
   teams: Team[];
   homeTeams: Team[];
@@ -38,8 +39,8 @@ export class CreateGameComponent implements OnInit {
   }
 
   createGame() {
-    this.dateSelect.setHours(this.timeSelect.hours);
-    this.dateSelect.setMinutes(this.timeSelect.minutes);
+    this.dateSelect.setHours(parseInt(this.timeSelect.toString().split(":")[0]));
+    this.dateSelect.setMinutes(parseInt(this.timeSelect.toString().split(":")[1]));
 
     let game: GameDto = {
       dateTime: this.dateSelect.getTime(),
@@ -47,7 +48,9 @@ export class CreateGameComponent implements OnInit {
     }
 
     this.backendService.createGame(game).subscribe({
-      next: result => { console.log(result); }
+      next: result => { 
+        this.router.navigate(['/home']);
+       }
     })
   }
 

@@ -221,11 +221,6 @@ export class GameStatusService {
   constructor(private backendService: BackendService) {
     this.score$ = new BehaviorSubject(this.score);
     this.foul$ = new BehaviorSubject(this.fouls);
-    // setInterval(() => {
-    //   this.incScore(this.score, this.fouls);
-    //   this.score$.next(this.score);
-    //   this.foul$.next(this.fouls);
-    // }, 1000);
 
     this.events$ = new Subject();
   }
