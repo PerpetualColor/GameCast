@@ -3,5 +3,5 @@ export class ParseEvent{
     player: string;
     type: string;
     amount: number;
-    
+    extra: string;
 }

@@ -83,6 +83,9 @@ export class EventConsoleComponent implements OnInit {
         case "next period":
           output += "End of period"
           break;
+        case "custom message":
+          output += parsedEvent.extra;
+          break;
       }
     } else {
       output += "Invalid event";

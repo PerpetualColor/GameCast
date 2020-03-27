@@ -89,6 +89,10 @@ export class GameStatusService {
     // syntax: np
     var nextPeriodMatch = new RegExp("^np$");
 
+    // send a custom message in the event list
+    // syntax: cm MESSAGE
+    var customMessageMatch = new RegExp("^cm (.*$)");
+
     let array;
 
     //if player scores
@@ -97,7 +101,8 @@ export class GameStatusService {
         type: "scores",
         amount: parseInt(array[3]),
         player: array[1],
-        origEvent: eventData
+        origEvent: eventData,
+        extra: null
       }
       return pEvent;
     }
@@ -108,7 +113,8 @@ export class GameStatusService {
         type: "free throw",
         amount: 1,
         player: array[1],
-        origEvent: eventData
+        origEvent: eventData,
+        extra: null
       }
       return pEvent;
     }
@@ -118,7 +124,8 @@ export class GameStatusService {
         type: "fouls",
         amount: null,
         player: array[1],
-        origEvent: eventData
+        origEvent: eventData,
+        extra: null
       }
       return pEvent;
     }
@@ -128,7 +135,8 @@ export class GameStatusService {
         type: "rebounds",
         amount: null,
         player: array[1],
-        origEvent: eventData
+        origEvent: eventData,
+        extra: null
       }
       return pEvent;
     }
@@ -138,7 +146,8 @@ export class GameStatusService {
         type: "start game",
         amount: null,
         player: null,
-        origEvent: eventData
+        origEvent: eventData,
+        extra: null
       }
       return pEvent;
     }
@@ -148,7 +157,8 @@ export class GameStatusService {
         type: "period",
         amount: parseInt(array[1]),
         player: null,
-        origEvent: eventData
+        origEvent: eventData,
+        extra: null
       }
       return pEvent;
     }
@@ -158,7 +168,19 @@ export class GameStatusService {
         type: "next period",
         amount: null,
         player: null,
-        origEvent: eventData
+        origEvent: eventData,
+        extra: null
+      }
+      return pEvent;
+    }
+    // custom message
+    else if ((array = customMessageMatch.exec(eventData))) {
+      let pEvent = {
+        type: "custom message",
+        amount: null,
+        player: null,
+        origEvent: eventData,
+        extra: array[1]
       }
       return pEvent;
     }
