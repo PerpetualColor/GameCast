@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 import { Player } from './model-objects/player';
 import { webSocket } from 'rxjs/webSocket';
 
-const baseUrl = (environment.production ? 'https://www.advtopics.xyz:8080' : 'http://localhost:8080');
+const baseUrl = (environment.production ? 'https://www.advtopics.xyz:8443' : 'http://localhost:8080');
 
 @Injectable({
   providedIn: 'root'
