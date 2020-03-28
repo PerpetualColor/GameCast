@@ -1,54 +1,39 @@
-$height: 8em;
-
 .game-score-board {
-    width: 60%;
-    margin-bottom: 1em;
-    margin-top: 1em;
+    margin: 1em;
+    margin-left: 10%;
+    margin-right: 10%;
     display: grid;
-    grid-template-columns: 3fr 1fr 3fr;
-    height: $height;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.period {
-    grid-column: 2;
+    grid-template-columns: 1fr min-content 1fr;
+    height: min-content;
 }
 
 .score-left {
-    grid-column: 1;
     display: grid;
-    grid-template-columns: min-content min-content auto;
-    height: 100%;
-    text-align: left;
+    grid-template-columns: min-content auto;
     white-space: nowrap;
 }
 
 .score-right {
-    grid-column: 3;
     display: grid;
-    grid-template-columns: auto min-content min-content;
-    height: 100%;
+    grid-template-columns: auto min-content;
     text-align: right;
+    white-space: nowrap;
+}
+
+.middle {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.img-container {
+    padding: 1vw;
+    height: 10em;
 }
 
 img {
-    max-height: $height;
+    height: 100%;
 }
 
-.left-img {
-    margin-left: auto;
-    padding-left: 1em;
-}
-
-.right-img {
-    padding-right: 1em;
-}
-
-.score-value {
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 2em;
-    margin-right: 2em;
-    font-size: 3em;
+.less-margin {
+    margin: 1vw;
 }
