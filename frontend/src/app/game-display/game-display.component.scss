@@ -1,6 +1,6 @@
 .grid-container {
     display: grid;
-    grid-template-columns: minmax(min-content, 30%) minmax(min-content, 40%) minmax(min-content, 30%);
+    grid-template-columns: 3fr 4fr;
     gap: 20px;
     margin-right: 20px;
     height: min-content;

@@ -20,6 +20,22 @@
     white-space: nowrap;
 }
 
+.score-data-left {
+    display: grid;
+    grid-template-columns: min-content auto;
+}
+
+.score-data-right {
+    display: grid;
+    grid-template-columns: auto min-content;
+}
+
+.score-value {
+    text-align: center;
+    padding-top: 4vh;
+    font-size: 4em;
+}
+
 .middle {
     text-align: center;
     white-space: nowrap;
