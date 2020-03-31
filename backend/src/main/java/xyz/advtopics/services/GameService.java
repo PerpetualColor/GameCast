@@ -185,7 +185,8 @@ public class GameService {
 
     public boolean getCanControl(long gameId) {
         Session session = sessionFactory.openSession();
-        Game g = session.get(Game.class, gameId);
-        return userIsAuthorized(g, uService.getCurrentUsername());
+        boolean canControl = userIsAuthorized(session.get(Game.class, gameId), uService.getCurrentUsername());
+        session.close();
+        return canControl;
     }
 }
