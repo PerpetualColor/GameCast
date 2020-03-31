@@ -182,4 +182,10 @@ public class GameService {
         session.close();
         return username;
     }
+
+    public boolean getCanControl(long gameId) {
+        Session session = sessionFactory.openSession();
+        Game g = session.get(Game.class, gameId);
+        return userIsAuthorized(g, uService.getCurrentUsername());
+    }
 }

@@ -80,4 +80,9 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(gameService.addAuthorizedUser(gameId, username));
     }
 
+    @GetMapping("/getCanControl")
+    public ResponseEntity<Boolean> getCanControl(@RequestParam long gameId) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(gameService.getCanControl(gameId));
+    }
+
 }
