@@ -19,7 +19,7 @@ public class UserService {
 
     private static boolean isValidString(String s) {
         for (Character c : s.toCharArray()) {
-            if (!Character.isLetterOrDigit(c)) {
+            if (!Character.isLetterOrDigit(c) && !" !#$%&()*+,-./:;<=>?@[]^_{}|~".contains(Character.toString(c))) {
                 return false;
             }
         }

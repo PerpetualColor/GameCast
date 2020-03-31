@@ -36,24 +36,6 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Created");               
     }
 
-    // unnecessary - contained in createGame
-    // @PostMapping("/addTeamToGame")
-    // public ResponseEntity<String> addTeamToGame(long gameID, long teamID, long groupID){
-    //     Session session = sessionFactory.openSession();
-        
-    //     gameService.addTeamToGame(gameID, teamID);
-
-    //     session.close();
-    //     return ResponseEntity.status(HttpStatus.ACCEPTED).body("Created"); 
-    // }
-
-    // ????
-    // @PostMapping("/addEventToGame") 
-    // public ResponseEntity<String> addEventToGame(long gameID, long eventID, long groupID){
-    //     gameService.addEventToGame(gameID, eventID);
-    //     return ResponseEntity.status(HttpStatus.ACCEPTED).body("Created"); 
-    // }
-
     @PostMapping("/getTeams")
     public ResponseEntity<List<Team>> getTeams(long gameID, long groupID){
         List<Team> teams = gameService.getTeams(gameID);
