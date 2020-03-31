@@ -50,3 +50,12 @@ h1{
 td {
     text-align: center;
 }
+
+.column {
+    width: min-content;
+}
+
+table {
+    margin: 1em;
+    white-space: nowrap;
+}

@@ -6,6 +6,8 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { ParseEvent } from '../model-objects/parseEvent';
 import { ArgumentOutOfRangeError } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthorizeOperatorComponent } from './authorize-operator/authorize-operator.component';
 
 @Component({
   selector: 'app-event-console',
@@ -21,7 +23,7 @@ export class EventConsoleComponent implements OnInit {
 
   @ViewChild(CdkVirtualScrollViewport, { static: false }) viewPort: CdkVirtualScrollViewport;
 
-  constructor(private gameStatusService: GameStatusService, private backendService: BackendService) { }
+  constructor(private gameStatusService: GameStatusService, private backendService: BackendService, public authDialog: MatDialog) { }
 
   ngOnInit() {
     this.badEvent = false;
@@ -34,7 +36,7 @@ export class EventConsoleComponent implements OnInit {
       next: val => {
         this.events = [val].concat(this.events);
       }
-    })
+    });
   }
 
   ngAfterViewInit() {
@@ -110,5 +112,16 @@ export class EventConsoleComponent implements OnInit {
     } else {
       this.badEvent = true;
     }
+  }
+
+  authorizeNew() {
+    let dialogRef = this.authDialog.open(AuthorizeOperatorComponent, {
+      height: '600px',
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 }

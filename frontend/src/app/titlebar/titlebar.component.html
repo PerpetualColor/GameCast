@@ -4,6 +4,13 @@
             <a routerLink="/home">GameCast</a>
         </p>
     </div>
+    <div class="login">
+        <button *ngIf="!username" mat-raised-button color="primary" (click)="openLoginDialog()">Login</button>
+        <button *ngIf="username" mat-button [matMenuTriggerFor]="logoutMenu"><b>{{ username }}</b></button>
+        <mat-menu #logoutMenu="matMenu">
+            <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
+    </div>
 </div>
 
 

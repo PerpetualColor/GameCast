@@ -21,11 +21,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatMenuModule } from '@angular/material/menu';
 import { ChatBoxComponent } from './chat-box/chat-box.component';
 import { RosterEditorComponent } from './roster/roster-editor/roster-editor.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { NewTeamComponent } from './create-game/new-team/new-team.component';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { AuthorizeOperatorComponent } from './event-console/authorize-operator/authorize-operator.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,10 @@ import { NewTeamComponent } from './create-game/new-team/new-team.component';
     CreateGameComponent,
     ChatBoxComponent,
     RosterEditorComponent,
-    NewTeamComponent
+    NewTeamComponent,
+    LoginDialogComponent,
+    RegistrationComponent,
+    AuthorizeOperatorComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +64,7 @@ import { NewTeamComponent } from './create-game/new-team/new-team.component';
     MatNativeDateModule,
     MatTableModule,
     MatIconModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

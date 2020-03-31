@@ -1,0 +1,12 @@
+<h1>Login to GameCast</h1>
+<mat-form-field>
+    <mat-label>Username</mat-label>
+    <input matInput [(ngModel)]="username">
+</mat-form-field>
+<br>
+<mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput [(ngModel)]="password" type="password">
+</mat-form-field>
+<br>
+<button mat-raised-button color="primary" (click)="loginRequest()">Submit</button>

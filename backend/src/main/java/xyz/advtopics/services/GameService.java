@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import xyz.advtopics.objects.Event;
 import xyz.advtopics.objects.Game;
 import xyz.advtopics.objects.Team;
+import xyz.advtopics.objects.User;
 import xyz.advtopics.objects.DTOs.GameDTO;
+import xyz.advtopics.websocket.SocketHandler;
 
 @Service
 public class GameService {
@@ -23,10 +25,29 @@ public class GameService {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Autowired
+    private SocketHandler socketHandler;
+
+    @Autowired
+    private UserService uService;
+
+    private boolean userIsAuthorized(Game g, String username) {
+        Hibernate.initialize(g.getAuthoUsers());
+        for (User u : g.getAuthoUsers()) {
+            if (u.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void createGame(GameDTO gameto) {
         Session session = sessionFactory.openSession();
+        User user = session.get(User.class, uService.getCurrentUsername());
         Game game = new Game();
         game.setTeams(new ArrayList<Team>());
+        game.setAuthoUsers(new ArrayList<>());
+        game.getAuthoUsers().add(user);
 
         //Set the teams 
         for(int i = 0; i < gameto.teamIds.length;i++){
@@ -117,5 +138,47 @@ public class GameService {
         }
         session.close();
         return games;
+    }
+
+    public void createAndAddEvent(String eventData, long eventDate, long gameId) {
+        Session session = sessionFactory.openSession();
+        Event e = new Event();
+        e.setData(eventData);
+        e.setDateTime(eventDate);
+        
+        Game g = session.get(Game.class, gameId);
+        if (!userIsAuthorized(g, uService.getCurrentUsername())) {
+            return;
+        }
+        e.setGame(g);
+        g.addEvents(e);
+
+
+        session.beginTransaction();
+        session.persist(e);
+        session.update(g);
+        session.getTransaction().commit();
+        session.close();
+        
+        e.setId(e.getId());
+        socketHandler.sendToGame(g, e);
+    }
+
+    public String addAuthorizedUser(long gameId, String username) {
+        Session session = sessionFactory.openSession();
+        Game g = session.get(Game.class, gameId);
+        if (!userIsAuthorized(g, uService.getCurrentUsername())) {
+            return "Not authorized to do that";
+        }
+        User u = session.get(User.class, username);
+        if (u == null) {
+            return "No user of that username";
+        }
+        g.getAuthoUsers().add(u);
+        session.beginTransaction();
+        session.update(g);
+        session.getTransaction().commit();
+        session.close();
+        return username;
     }
 }

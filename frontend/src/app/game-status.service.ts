@@ -16,6 +16,7 @@ export class GameStatusService {
   public events$: Subject<Event>;
   public foul$: Subject<number[]>;
   public period$: Subject<number>;
+  public updateData$: Subject<boolean>;
 
   private score: number[] = [0, 0];
   private fouls: number[] = [0, 0];
@@ -23,33 +24,6 @@ export class GameStatusService {
   private gameSocket: WebSocketSubject<any>;
 
   public game: Game;
-
-  incScore(score, fouls) {
-    score[0] += 1;
-    score[1] += 2;
-    fouls[0] += 1;
-    fouls[1] += 1;
-  }
-
-
-
-  eventSubscriber() {
-    const observers = [];
-
-    return (observer) => {
-      observers.push(observer);
-
-      return {
-        unsubscribe() {
-          observers.splice(observers.indexOf(observer), 1);
-        }
-      }
-    }
-    // return the unsubscribe function
-
-  }
-
-
 
   // to print an object with formatting: console.dir(obj);
   //list of reg exp matches, if doesnt match return null
@@ -218,17 +192,20 @@ export class GameStatusService {
         case "free throw":
           this.score[team] += 1;
           this.score$.next(this.score);
+          if (this.getPlayer(parsedEvent.player) != null) {
+            this.getPlayer(parsedEvent.player).stats.scores.push(1);
+          }
           break;
         case "rebounds":
           if (this.getPlayer(parsedEvent.player) != null) {
-            this.getPlayer(parsedEvent.player).stats.rebounds += parsedEvent.amount;
+            this.getPlayer(parsedEvent.player).stats.rebounds += 1;
           }
           break;
         case "fouls":
           this.fouls[team] += 1;
           this.foul$.next(this.fouls);
           if (this.getPlayer(parsedEvent.player) != null) {
-            this.getPlayer(parsedEvent.player).stats.fouls += parsedEvent.amount;
+            this.getPlayer(parsedEvent.player).stats.fouls += 1;
           }
           break;
         case "start game":
@@ -254,45 +231,39 @@ export class GameStatusService {
     this.fouls = [0, 0];
 
     this.game = game;
-
-    for (let e of game.events) {
-      this.receiveEvent(e);
-    }
-
-    let homeID = game.teams[0].id;
-    let guestID = game.teams[1].id;
-    this.backendService.getTeam(homeID).subscribe({
-      next: result => {
-        this.game.teams[0] = result.body;
-      }
-    });
-    this.backendService.getTeam(guestID).subscribe({
-      next: result => {
-        this.game.teams[1] = result.body;
-      }
-    });
+    this.readAllEvents();
 
     if (!this.gameSocket) {
       this.gameSocket = this.backendService.openWebSocket();
     }
     this.gameSocket.asObservable().subscribe(
       msg => {
-        this.events$.next(msg as Event);
         this.receiveEvent(msg as Event);
+        this.events$.next(msg as Event);
       }
     );
     this.gameSocket.next(game.id);
+
+
+  }
+
+  public readAllEvents() {
+    for (let e of this.game.events) {
+      this.receiveEvent(e);
+    }
   }
 
   public updateTeam() {
     this.backendService.getTeam(this.game.teams[0].id).subscribe({
       next: result => {
         this.game.teams[0] = result.body;
-      }
-    });
-    this.backendService.getTeam(this.game.teams[1].id).subscribe({
-      next: result => {
-        this.game.teams[1] = result.body;
+        this.backendService.getTeam(this.game.teams[1].id).subscribe({
+          next: result => {
+            this.game.teams[1] = result.body;
+            this.readAllEvents();
+            this.updateData$.next(true);
+          }
+        });
       }
     });
   }
@@ -302,6 +273,7 @@ export class GameStatusService {
     this.score$ = new BehaviorSubject(this.score);
     this.foul$ = new BehaviorSubject(this.fouls);
     this.period$ = new BehaviorSubject(this.period);
+    this.updateData$ = new BehaviorSubject(true);
 
     this.events$ = new Subject();
   }

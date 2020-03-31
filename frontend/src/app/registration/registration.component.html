@@ -1,0 +1,19 @@
+<div class="registration mat-elevation-z8">
+    <h1>Create your account</h1>
+    <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput [(ngModel)]="username">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput [(ngModel)]="password" type="password">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Confirm Password</mat-label>
+        <input matInput [(ngModel)]="matchPassword" type="password">
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" (click)="registerUser()">Submit</button>
+</div>

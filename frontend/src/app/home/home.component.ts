@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
     this.backendService.getAllGames().subscribe({
       next: result => {
         this.games = result.body;
-        console.dir(this.games);
       }
     });
   }
@@ -31,7 +30,6 @@ export class HomeComponent implements OnInit {
   setGameAndRedirect(game: Game) {
     this.gameStatusService.selectGame(game);
     this.router.navigate([ "/gamecast" ]);
-
   }
 
 }

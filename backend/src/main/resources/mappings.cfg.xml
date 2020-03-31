@@ -7,6 +7,7 @@
         <mapping class="xyz.advtopics.objects.Game" />
         <mapping class="xyz.advtopics.objects.Player" />
         <mapping class="xyz.advtopics.objects.Team" />
+        <mapping class="xyz.advtopics.objects.User" />
         
     </session-factory>
 </hibernate-configuration>

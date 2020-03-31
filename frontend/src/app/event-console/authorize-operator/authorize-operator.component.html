@@ -1,0 +1,8 @@
+<h1>Authorize another Operator</h1>
+<mat-form-field>
+    <mat-label>Username</mat-label>
+    <input matInput [(ngModel)]="username">
+</mat-form-field>
+<br>
+<button mat-raised-button color="primary" (click)="authRequest()">Submit</button>
+<p class="careful">Be sure to enter the username carefully!</p>

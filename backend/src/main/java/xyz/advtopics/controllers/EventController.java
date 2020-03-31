@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,11 +19,11 @@ public class EventController{
     private EventService eventService;
     
     // server/getPlayer
-    @PostMapping("/addEvent")
-    public ResponseEntity<String> addEvent(){
-        eventService.addEvent("example", System.currentTimeMillis());
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Successfully created event: ");
-    }
+    // @PostMapping("/addEvent")
+    // public ResponseEntity<String> addEvent(){
+    //     eventService.addEvent("example", System.currentTimeMillis());
+    //     return ResponseEntity.status(HttpStatus.ACCEPTED).body("Successfully created event: ");
+    // }
 
     // returns the event
     @GetMapping("/getEvent")
@@ -37,18 +36,5 @@ public class EventController{
     public ResponseEntity<List<Event>> getEventsOfGame(@RequestParam long gameId) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(eventService.getEventsOfGame(gameId));
     }
-
-    /**
-     * @param eventData what happened
-     * @param eventDate when it happened, in unix timestamp format
-     * @param gameId which game it happened in
-     * @return
-     */
-    @PostMapping("/createAndAddEvent")
-    public ResponseEntity<String> createAndAddEvent(@RequestParam String eventData, @RequestParam long eventDate, @RequestParam long gameId) {
-        eventService.createAndAddEvent(eventData, eventDate, gameId);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Success");
-    }
-
 
 }

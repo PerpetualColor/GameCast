@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import xyz.advtopics.objects.Event;
@@ -35,25 +36,23 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Created");               
     }
 
-    @PostMapping("/addTeamToGame")
-    public ResponseEntity<String> addTeamToGame(long gameID, long teamID, long groupID){
-        Session session = sessionFactory.openSession();
+    // unnecessary - contained in createGame
+    // @PostMapping("/addTeamToGame")
+    // public ResponseEntity<String> addTeamToGame(long gameID, long teamID, long groupID){
+    //     Session session = sessionFactory.openSession();
         
-        gameService.addTeamToGame(gameID, teamID);
+    //     gameService.addTeamToGame(gameID, teamID);
 
-        session.close();
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Created"); 
-    }
+    //     session.close();
+    //     return ResponseEntity.status(HttpStatus.ACCEPTED).body("Created"); 
+    // }
 
-    @PostMapping("/addEventToGame") 
-    public ResponseEntity<String> addEventToGame(long gameID, long eventID, long groupID){
-        Session session = sessionFactory.openSession();
-        
-        gameService.addTeamToGame(gameID, eventID);
-
-        session.close();
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Created"); 
-    }
+    // ????
+    // @PostMapping("/addEventToGame") 
+    // public ResponseEntity<String> addEventToGame(long gameID, long eventID, long groupID){
+    //     gameService.addEventToGame(gameID, eventID);
+    //     return ResponseEntity.status(HttpStatus.ACCEPTED).body("Created"); 
+    // }
 
     @PostMapping("/getTeams")
     public ResponseEntity<List<Team>> getTeams(long gameID, long groupID){
@@ -80,6 +79,23 @@ public class GameController {
     @GetMapping("/getAllGames")
     public ResponseEntity<List<Game>> getAllGames() {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(gameService.getAllGames());
+    }
+
+    /**
+     * @param eventData what happened
+     * @param eventDate when it happened, in unix timestamp format
+     * @param gameId which game it happened in
+     * @return
+     */
+    @PostMapping("/createAndAddEvent")
+    public ResponseEntity<String> createAndAddEvent(@RequestParam String eventData, @RequestParam long eventDate, @RequestParam long gameId) {
+        gameService.createAndAddEvent(eventData, eventDate, gameId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Success");
+    }
+
+    @PostMapping("/addAuthorizedUser")
+    public ResponseEntity<String> addAuthorizedUser(@RequestParam long gameId, @RequestParam String username) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(gameService.addAuthorizedUser(gameId, username));
     }
 
 }

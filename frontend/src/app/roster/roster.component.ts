@@ -6,6 +6,7 @@ import { Player } from '../model-objects/player';
 import { RosterEditorComponent } from './roster-editor/roster-editor.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PlayerStats } from '../model-objects/playerstats';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-roster',
@@ -16,50 +17,47 @@ export class RosterComponent implements OnInit {
   guest: Team;
   home: Team;
   displayedColumns: string[] = ['number', 'name', 'scores', 'fouls', 'rebounds'];
-  homeDataSource: Player[] = [
-    {id: -1, name: "James Xu", number: 1, stats: {scores: [7], fouls: 7, rebounds: 7}},
-    {id: -1, name: "James Xu", number: 1, stats: {scores: [8], fouls: 8, rebounds: 8}},
-    {id: -1, name: "James Xu", number: 1, stats: {scores: [9], fouls: 9, rebounds: 9}},
-    {id: -1, name: "James Xu", number: 1, stats: {scores: [10], fouls: 2, rebounds: 10}},
-    {id: -1, name: "James Xu", number: 1, stats: {scores: [34], fouls: 5, rebounds: 7}},
-    {id: -1, name: "James Xu", number: 1, stats: {scores: [12], fouls: 11, rebounds: 3}},
-    {id: -1, name: "James Xu", number: 1, stats: {scores: [13], fouls: 826, rebounds: 2}},
-    {id: -1, name: "James Xu", number: 1, stats: {scores: [14], fouls: 9, rebounds: 24}}
-  ];
-
-  guestDataSource: Player[];
-
-  homeRoster: Player[];
+  homeDataSource: MatTableDataSource<Player>;
+  guestDataSource: MatTableDataSource<Player>;
 
   constructor(private backendService: BackendService, 
     private gameStatusService: GameStatusService, 
-    public editorDialog: MatDialog,
-    private changeDetectorRef: ChangeDetectorRef) { }
+    public editorDialog: MatDialog) { }
 
   ngOnInit() {
     this.home = this.gameStatusService.game.teams[0];
     this.guest = this.gameStatusService.game.teams[1];
-    
-    this.homeDataSource = this.gameStatusService.game.teams[0].players;
-    this.guestDataSource = this.gameStatusService.game.teams[1].players;
-
-    for (let player of this.homeDataSource) {
-      if (!player.stats) {
-        player.stats = {scores: [], fouls: 0, rebounds: 0};
-      }
-    }
-
-    for (let player of this.guestDataSource) {
-      if (!player.stats) {
-        player.stats = {scores: [], fouls: 0, rebounds: 0};
-      }
-    }
 
     this.gameStatusService.events$.subscribe({
-      next: result => {
-        this.changeDetectorRef.detectChanges();
+      next: _ => {
+        this.updateTable();
       }
-    })
+    });
+
+    this.gameStatusService.updateData$.subscribe({
+      next: _ => {
+        this.updateTable();
+      }
+    });
+    
+    this.updateTable();
+  }
+
+  updateTable() {
+    this.homeDataSource = new MatTableDataSource(this.gameStatusService.game.teams[0].players);
+    this.guestDataSource = new MatTableDataSource(this.gameStatusService.game.teams[1].players);
+
+    for (let player of this.homeDataSource.data) {
+      if (!player.stats) {
+        player.stats = {scores: [], fouls: 0, rebounds: 0};
+      }
+    }
+
+    for (let player of this.guestDataSource.data) {
+      if (!player.stats) {
+        player.stats = {scores: [], fouls: 0, rebounds: 0};
+      }
+    }
   }
   
   sumArray(numbers: number[]): number {
@@ -75,8 +73,7 @@ export class RosterComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.gameStatusService.updateTeam();
-      this.ngOnInit();
-      this.changeDetectorRef.detectChanges();
+      this.updateTable();
     });
   }
 

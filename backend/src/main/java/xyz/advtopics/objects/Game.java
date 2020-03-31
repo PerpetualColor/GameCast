@@ -7,10 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -22,6 +25,7 @@ public class Game {
     private long dateTime;
     private List<Team> teams;
     private List<Event> events;
+    private List<User> authoUsers;
 
     public Game() {
     }
@@ -79,6 +83,17 @@ public class Game {
 
     public void setEvents(List<Event> events) {
         this.events = events;
+    }
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name="game_users", joinColumns=@JoinColumn(name="game_id"), inverseJoinColumns=@JoinColumn(name="user_id"))
+    @JsonIgnore
+    public List<User> getAuthoUsers() {
+        return authoUsers;
+    }
+
+    public void setAuthoUsers(List<User> authoUsers) {
+        this.authoUsers = authoUsers;
     }
 
 }
