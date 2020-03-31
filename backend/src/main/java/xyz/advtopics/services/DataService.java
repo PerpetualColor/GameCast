@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import xyz.advtopics.objects.Event;
-import xyz.advtopics.objects.Game;
 import xyz.advtopics.objects.Team;
-import xyz.advtopics.objects.DTOs.GameDTO;
 import xyz.advtopics.objects.DTOs.TeamDTO;
 
 @Service
@@ -43,20 +41,20 @@ public class DataService {
         session.close();
     }
 
-    public void createGame(GameDTO gameInfo) {
-        Session session = sessionFactory.openSession();
-        Game game = new Game();
-        game.setDateTime(gameInfo.dateTime);
-        List<Team> teams = new ArrayList<Team>();
-        for (long i : gameInfo.teamIds) {
-            teams.add(session.get(Team.class, i));
-        }
-        game.setTeams(teams);
-        session.beginTransaction();
-        session.persist(game);
-        session.getTransaction().commit();
-        session.close();
-    }
+    // public void createGame(GameDTO gameInfo) {
+    //     Session session = sessionFactory.openSession();
+    //     Game game = new Game();
+    //     game.setDateTime(gameInfo.dateTime);
+    //     List<Team> teams = new ArrayList<Team>();
+    //     for (long i : gameInfo.teamIds) {
+    //         teams.add(session.get(Team.class, i));
+    //     }
+    //     game.setTeams(teams);
+    //     session.beginTransaction();
+    //     session.persist(game);
+    //     session.getTransaction().commit();
+    //     session.close();
+    // }
 
     public List<Team> getAllTeams() {
         Session session = sessionFactory.openSession();

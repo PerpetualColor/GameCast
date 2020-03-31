@@ -1,8 +1,10 @@
 package xyz.advtopics.objects;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,9 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -23,9 +28,10 @@ public class Game {
     
     private long id;
     private long dateTime;
-    private List<Team> teams;
     private List<Event> events;
     private List<User> authoUsers;
+    private Team homeTeam;
+    private Team guestTeam;
 
     public Game() {
     }
@@ -50,14 +56,10 @@ public class Game {
     /**
      * @return teams playing in the game
      */
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "game_teams")
+    @Transient
+    @JsonGetter(value="teams")
     public List<Team> getTeams() {
-        return teams;
-    }
-
-    public void addTeamToGame(Team team) {
-        teams.add(team);
+        return Arrays.asList(homeTeam, guestTeam);
     }
 
     public void addEvents(Event event) {
@@ -77,10 +79,6 @@ public class Game {
         this.dateTime = dateTime;
     }
 
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
-    }
-
     public void setEvents(List<Event> events) {
         this.events = events;
     }
@@ -94,6 +92,26 @@ public class Game {
 
     public void setAuthoUsers(List<User> authoUsers) {
         this.authoUsers = authoUsers;
+    }
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Team getHomeTeam() {
+        return homeTeam;
+    }
+
+    public void setHomeTeam(Team homeTeam) {
+        this.homeTeam = homeTeam;
+    }
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Team getGuestTeam() {
+        return guestTeam;
+    }
+
+    public void setGuestTeam(Team guestTeam) {
+        this.guestTeam = guestTeam;
     }
 
 }

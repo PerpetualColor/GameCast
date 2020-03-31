@@ -45,15 +45,16 @@ public class GameService {
         Session session = sessionFactory.openSession();
         User user = session.get(User.class, uService.getCurrentUsername());
         Game game = new Game();
-        game.setTeams(new ArrayList<Team>());
         game.setAuthoUsers(new ArrayList<>());
         game.getAuthoUsers().add(user);
 
         //Set the teams 
-        for(int i = 0; i < gameto.teamIds.length;i++){
-            Team team = session.get(Team.class, gameto.teamIds[i]);
-            game.addTeamToGame(team);
-        }
+        // for(int i = 0; i < gameto.teamIds.length;i++){
+        //     Team team = session.get(Team.class, gameto.teamIds[i]);
+        //     game.addTeamToGame(team);
+        // }
+        game.setHomeTeam(session.get(Team.class, gameto.teamIds[0]));
+        game.setGuestTeam(session.get(Team.class, gameto.teamIds[1]));
         //Set the time
         game.setDateTime(gameto.dateTime);
 
@@ -63,19 +64,18 @@ public class GameService {
         session.close();
     }
 
-    public void addTeamToGame(long gameID, long teamID) {
-        Session session = sessionFactory.openSession();
+    // public void addTeamToGame(long gameID, long teamID) {
+    //     Session session = sessionFactory.openSession();
 
-        Game game = session.get(Game.class, gameID);
-        Team team = session.get(Team.class, teamID);
-        game.addTeamToGame(team);
+    //     Game game = session.get(Game.class, gameID);
+    //     Team team = session.get(Team.class, teamID);
+    //     game.addTeamToGame(team);
 
-        session.beginTransaction();
-        session.persist(game);
-        session.getTransaction().commit();
-        session.close();
-
-    }
+    //     session.beginTransaction();
+    //     session.persist(game);
+    //     session.getTransaction().commit();
+    //     session.close();
+    // }
 
     public void addEvent(long gameID, long eventID) {
         Session session = sessionFactory.openSession();
@@ -134,7 +134,8 @@ public class GameService {
         criteria.from(Game.class);
         List<Game> games = session.createQuery(criteria).getResultList();
         for (Game g : games) {
-            Hibernate.initialize(g.getTeams());
+            Hibernate.initialize(g.getHomeTeam());
+            Hibernate.initialize(g.getGuestTeam());
         }
         session.close();
         return games;
