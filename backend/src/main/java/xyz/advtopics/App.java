@@ -11,6 +11,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import xyz.advtopics.storage.FileSystemStorage;
+import xyz.advtopics.storage.StorageService;
+
 @SpringBootApplication
 public class App 
 {
@@ -37,5 +40,12 @@ public class App
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(hibernate5Module);
         return mapper;
+    }
+
+    @Bean
+    public StorageService storageService() {
+        FileSystemStorage store = new FileSystemStorage();
+        store.init();
+        return store;
     }
 }
