@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileSystemStorage implements StorageService {
-
+    
     private final static Path baseDir = Paths.get("../../../img-uploads");
 
     @Override
@@ -92,7 +92,6 @@ public class FileSystemStorage implements StorageService {
 
     @Override
     public void deleteAll() {
-        // TODO Auto-generated method stub
 
     }
 

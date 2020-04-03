@@ -1,6 +1,13 @@
 <h1>Enter this team's roster</h1>
 
-<div class="container">
+<div class="container" *ngIf="canEditTeam">
+    <div class="imageUpload">
+        <button mat-raised-button color="primary" (click)="fileInput.click()">
+            <span *ngIf="!fileSelect">Upload an Image</span>
+            <span *ngIf="fileSelect">Upload another Image</span>
+            <input #fileInput type="file" (change)="onFileChange($event)" style="display:none;" />
+        </button>
+    </div>
     <div class="playerInput" *ngFor="let n of inRange">
         <mat-form-field class="nameInput">
             <mat-label>Name</mat-label>

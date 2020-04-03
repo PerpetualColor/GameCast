@@ -1,5 +1,7 @@
 package xyz.advtopics.controllers;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import xyz.advtopics.objects.Team;
+import xyz.advtopics.objects.User;
+import xyz.advtopics.services.UserService;
 import xyz.advtopics.storage.StorageService;
 
 @Controller
@@ -21,19 +25,24 @@ public class FileUploadController {
     @Autowired
     private StorageService storageService;
 
+    @Autowired 
+    private UserService uService;
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
     @GetMapping("/getImage")
     @ResponseBody
-    public ResponseEntity<Resource> getImage(@RequestParam long teamId) {
+    public ResponseEntity<Object> getImage(@RequestParam long teamId) {
         Resource file;
         try {
             file = storageService.loadAsResource(Long.toString(teamId) + ".png");
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                    .header(HttpHeaders.CONTENT_TYPE, "image/png")
                     .body(file);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body("Image not found");
         }
     }
 
@@ -41,6 +50,14 @@ public class FileUploadController {
     public ResponseEntity<String> handleFileUpload(@RequestParam long teamId,
             @RequestParam("file") MultipartFile file) {
         try {
+            Session session = sessionFactory.openSession();
+            Team t = session.get(Team.class, teamId);
+            User u = session.get(User.class, uService.getCurrentUsername());
+            if (!t.getOwner().getUsername().equals(u.getUsername())) {
+                session.close();
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You are not the owner of the team");
+            }
+            session.close();
             storageService.store(file, Long.toString(teamId) + ".png");
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Successfully uploaded");
         } catch (Exception e) {

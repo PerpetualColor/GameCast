@@ -7,6 +7,11 @@ import { Event } from './model-objects/event';
 import { ParseEvent } from './model-objects/parseEvent';
 import { Player } from './model-objects/player';
 
+export enum UpdateType {
+  Roster,
+  Images
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +21,7 @@ export class GameStatusService {
   public events$: Subject<Event>;
   public foul$: Subject<number[]>;
   public period$: Subject<number>;
-  public updateData$: Subject<boolean>;
+  public updateData$: Subject<UpdateType>;
 
   private score: number[] = [0, 0];
   private fouls: number[] = [0, 0];
@@ -243,8 +248,6 @@ export class GameStatusService {
       }
     );
     this.gameSocket.next(game.id);
-
-
   }
 
   public readAllEvents() {
@@ -261,7 +264,8 @@ export class GameStatusService {
           next: result => {
             this.game.teams[1] = result.body;
             this.readAllEvents();
-            this.updateData$.next(true);
+            this.updateData$.next(UpdateType.Roster);
+            this.updateData$.next(UpdateType.Images);
           }
         });
       }
@@ -273,7 +277,7 @@ export class GameStatusService {
     this.score$ = new BehaviorSubject(this.score);
     this.foul$ = new BehaviorSubject(this.fouls);
     this.period$ = new BehaviorSubject(this.period);
-    this.updateData$ = new BehaviorSubject(true);
+    this.updateData$ = new Subject();
 
     this.events$ = new Subject();
   }

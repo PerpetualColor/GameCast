@@ -161,7 +161,45 @@ export class BackendService {
       }
     }).pipe(
       catchError(error => this.handleError(error))
-    )
+    );
+  }
+
+  uploadImage(teamId: number, img: File): Observable<HttpResponse<string>> {
+    const formData = new FormData();
+    formData.append("file", img, img.name);
+    return this.http.post(`${baseUrl}/uploadImage`, formData, {
+      withCredentials: true,
+      observe: 'response',
+      responseType: 'text',
+      params: {
+        teamId: teamId.toString()
+      }
+    }).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  getImage(teamId: number): Observable<Blob> {
+    return this.http.get(`${baseUrl}/getImage`, {
+      responseType: 'blob',
+      params: {
+        teamId: teamId.toString()
+      }
+    }).pipe(
+      catchError(error => this.handleError(error))
+    );
+  }
+
+  getCanEditTeam(teamId: number): Observable<HttpResponse<boolean>> {
+    return this.http.get<boolean>(`${baseUrl}/getCanEditTeam`, {
+      withCredentials: true,
+      observe: 'response',
+      params: {
+        teamId: teamId.toString()
+      }
+    }).pipe(
+      catchError(error => this.handleError(error))
+    );
   }
 
   logout(): Observable<HttpResponse<string>> {
@@ -171,7 +209,7 @@ export class BackendService {
       responseType: 'text'
     }).pipe(
       catchError(error => this.handleError(error))
-    )
+    );
   }
 
   openWebSocket() {
@@ -182,7 +220,6 @@ export class BackendService {
 
   
   private handleError(error: HttpErrorResponse) {
-    console.error("Error: ", error.error.message);
     return throwError(error);
   }
   

@@ -38,16 +38,21 @@ public class TeamController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(teamService.getAllTeams());
     }
 
-    @PostMapping("/createAndAddPlayer")
-    public ResponseEntity<String> createAndAddPlayer(@RequestParam String name, @RequestParam int number, @RequestParam long teamId) {
-        teamService.createAndAddPlayer(name, number, teamId);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Success");
-    }
+    // @PostMapping("/createAndAddPlayer")
+    // public ResponseEntity<String> createAndAddPlayer(@RequestParam String name, @RequestParam int number, @RequestParam long teamId) {
+    //     teamService.createAndAddPlayer(name, number, teamId);
+    //     return ResponseEntity.status(HttpStatus.ACCEPTED).body("Success");
+    // }
 
     @PostMapping("/updateRoster")
     public ResponseEntity<String> updateRoster(@RequestBody Player[] roster, @RequestParam long teamId) {
         teamService.updateRoster(roster, teamId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Success");
+    }
+
+    @GetMapping("/getCanEditTeam")
+    public ResponseEntity<Boolean> getCanEditTeam(@RequestParam long teamId) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(teamService.getCanEditTeam(teamId));
     }
 
 }

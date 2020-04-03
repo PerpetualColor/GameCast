@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Team } from '../model-objects/team';
 import { BackendService } from '../backend.service';
-import { GameStatusService } from '../game-status.service';
+import { GameStatusService, UpdateType } from '../game-status.service';
 import { Player } from '../model-objects/player';
 import { RosterEditorComponent } from './roster-editor/roster-editor.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -35,8 +35,10 @@ export class RosterComponent implements OnInit {
     });
 
     this.gameStatusService.updateData$.subscribe({
-      next: _ => {
-        this.updateTable();
+      next: type => {
+        if (type == UpdateType.Roster) {
+          this.updateTable();
+        }
       }
     });
     
