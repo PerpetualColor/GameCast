@@ -171,6 +171,18 @@ export class BackendService {
       responseType: 'text'
     }).pipe(
       catchError(error => this.handleError(error))
+    );
+  }
+
+  getCanControl(gameId: number): Observable<HttpResponse<boolean>> {
+    return this.http.get<boolean>(`${baseUrl}/getCanControl`, {
+      withCredentials: true,
+      observe: 'response',
+      params: {
+        gameId: gameId.toString()
+      }
+    }).pipe(
+      catchError(error => this.handleError(error))
     )
   }
 

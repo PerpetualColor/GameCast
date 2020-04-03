@@ -23,6 +23,8 @@ export class EventConsoleComponent implements OnInit {
 
   @ViewChild(CdkVirtualScrollViewport, { static: false }) viewPort: CdkVirtualScrollViewport;
 
+  canControl: boolean = false;
+  
   constructor(private gameStatusService: GameStatusService, private backendService: BackendService, public authDialog: MatDialog) { }
 
   ngOnInit() {
@@ -37,6 +39,12 @@ export class EventConsoleComponent implements OnInit {
         this.events = [val].concat(this.events);
       }
     });
+
+    this.gameStatusService.canControlGame$.subscribe({
+      next: result => {
+        this.canControl = result;
+      }
+    })
   }
 
   ngAfterViewInit() {
