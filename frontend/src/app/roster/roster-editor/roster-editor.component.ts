@@ -50,7 +50,7 @@ export class RosterEditorComponent implements OnInit {
   }
 
   newName(): void {
-    if (this.playerNames[this.playerNames.length-1] != "" || this.playerNumbers[this.playerNumbers.length-1] != null) {
+    if (this.playerNames[this.playerNames.length - 1] != "" || this.playerNumbers[this.playerNumbers.length - 1] != null) {
       this.playerNames.push("");
       this.playerNumbers.push(null);
       this.inRange.push(this.inRange.length);
@@ -62,16 +62,17 @@ export class RosterEditorComponent implements OnInit {
       this.team.players[i].name = this.playerNames[i];
       this.team.players[i].number = this.playerNumbers[i];
     }
-    for (var i = this.team.players.length; i < this.playerNames.length-1; i++) {
+    for (var i = this.team.players.length; i < this.playerNames.length - 1; i++) {
       if (this.playerNames[i] && this.playerNumbers[i]) {
-        this.team.players.push({ id: -1, name: this.playerNames[i], number: this.playerNumbers[i], stats: null});
+        this.team.players.push({ id: -1, name: this.playerNames[i], number: this.playerNumbers[i], stats: null });
       }
     }
-
-    this.backendService.uploadImage(this.team.id, this.fileSelect).subscribe({
-      next: result => {
-      }
-    });
+    if (this.fileSelect) {
+      this.backendService.uploadImage(this.team.id, this.fileSelect).subscribe({
+        next: result => {
+        }
+      });
+    }
 
     this.backendService.updateRoster(this.team.players, this.team.id).subscribe({
       next: result => {

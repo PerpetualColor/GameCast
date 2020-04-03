@@ -48,7 +48,7 @@ export class RosterComponent implements OnInit {
       next: result => {
         this.canControl = result;
       }
-    })
+    });
     
     this.updateTable();
   }
