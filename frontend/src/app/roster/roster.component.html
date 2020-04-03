@@ -34,7 +34,7 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
 
-                <div class="edit-button">
+                <div class="edit-button" *ngIf="canControl">
                     <button mat-raised-button (click)="openEditorDialog(home)">Edit</button>
                 </div>
             </mat-tab>

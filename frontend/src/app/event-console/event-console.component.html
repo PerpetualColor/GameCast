@@ -7,12 +7,14 @@
       </ng-container>
     </cdk-virtual-scroll-viewport>
   </div>
-  <span *ngIf="badEvent" class="warning">Invalid event!<br></span>
-  <mat-form-field>
-    <input matInput placeholder="Event information" (keydown.enter)="submitEvent()" [(ngModel)]="readyData" value="">
-  </mat-form-field>
-  <button mat-button (click)="submitEvent()">Submit</button>
+  <div *ngIf="canControl">
+    <span *ngIf="badEvent" class="warning">Invalid event!<br></span>
+    <mat-form-field>
+      <input matInput placeholder="Event information" (keydown.enter)="submitEvent()" [(ngModel)]="readyData" value="">
+    </mat-form-field>
+    <button mat-button (click)="submitEvent()">Submit</button>
 
-  <button mat-button (click)="authorizeNew()">Authorize another Operator</button>
+    <button mat-button (click)="authorizeNew()">Authorize another Operator</button>
+  </div>
 
 </mat-card>
