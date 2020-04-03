@@ -212,12 +212,23 @@ export class BackendService {
     );
   }
 
+  getCanControl(gameId: number): Observable<HttpResponse<boolean>> {
+    return this.http.get<boolean>(`${baseUrl}/getCanControl`, {
+      withCredentials: true,
+      observe: 'response',
+      params: {
+        gameId: gameId.toString()
+      }
+    }).pipe(
+      catchError(error => this.handleError(error))
+    )
+  }
+
   openWebSocket() {
     return webSocket({
       url: `ws${baseUrl.split("http")[1]}/webSocket`
     });
   }
-
   
   private handleError(error: HttpErrorResponse) {
     return throwError(error);

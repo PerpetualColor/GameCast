@@ -20,6 +20,8 @@ export class RosterComponent implements OnInit {
   homeDataSource: MatTableDataSource<Player>;
   guestDataSource: MatTableDataSource<Player>;
 
+  canControl: boolean = false;
+
   constructor(private backendService: BackendService, 
     private gameStatusService: GameStatusService, 
     public editorDialog: MatDialog) { }
@@ -41,6 +43,12 @@ export class RosterComponent implements OnInit {
         }
       }
     });
+
+    this.gameStatusService.canControlGame$.subscribe({
+      next: result => {
+        this.canControl = result;
+      }
+    })
     
     this.updateTable();
   }

@@ -22,6 +22,7 @@ export class GameStatusService {
   public foul$: Subject<number[]>;
   public period$: Subject<number>;
   public updateData$: Subject<UpdateType>;
+  public canControlGame$: Subject<boolean>;
 
   private score: number[] = [0, 0];
   private fouls: number[] = [0, 0];
@@ -232,6 +233,7 @@ export class GameStatusService {
   }
 
   public selectGame(game: Game) {
+    this.canControlGame$.next(false);
     this.score = [0, 0];
     this.fouls = [0, 0];
 
@@ -248,6 +250,13 @@ export class GameStatusService {
       }
     );
     this.gameSocket.next(game.id);
+
+    this.backendService.getCanControl(this.game.id).subscribe({
+      next: result => {
+        this.canControlGame$.next(result.body);
+      }
+    });
+
   }
 
   public readAllEvents() {
@@ -278,6 +287,7 @@ export class GameStatusService {
     this.foul$ = new BehaviorSubject(this.fouls);
     this.period$ = new BehaviorSubject(this.period);
     this.updateData$ = new Subject();
+    this.canControlGame$ = new BehaviorSubject(false);
 
     this.events$ = new Subject();
   }
