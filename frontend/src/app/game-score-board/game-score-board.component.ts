@@ -59,16 +59,16 @@ export class GameScoreBoardComponent implements OnInit {
         console.log("subscribe complete");
       }
     });
-
-    this.fetchImages();
-
+    
     this.gameStatusService.updateData$.subscribe({
       next: result => {
         if (result === UpdateType.Images) {
-          this.fetchImages;
+          this.fetchImages();
         }
       }
     });
+
+    this.fetchImages();
   }
 
   fetchImages() {

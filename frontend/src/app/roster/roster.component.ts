@@ -38,7 +38,7 @@ export class RosterComponent implements OnInit {
 
     this.gameStatusService.updateData$.subscribe({
       next: type => {
-        if (type == UpdateType.Roster) {
+        if (type === UpdateType.Roster) {
           this.updateTable();
         }
       }

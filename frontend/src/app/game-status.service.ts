@@ -273,6 +273,7 @@ export class GameStatusService {
           next: result => {
             this.game.teams[1] = result.body;
             this.readAllEvents();
+            console.log("Sending update events");
             this.updateData$.next(UpdateType.Roster);
             this.updateData$.next(UpdateType.Images);
           }
